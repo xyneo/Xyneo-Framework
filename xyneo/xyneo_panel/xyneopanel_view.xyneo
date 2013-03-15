@@ -1,0 +1,181 @@
+<?php
+    if(DEVELOPER_MODE == 'off')
+        die("DEVELOPER MODE IS OFF!");
+    elseif(DEVELOPER_MODE != 'on'){
+        die("INVALID VALUE FOR DEVELOPER MODE! CHECK YOUR CONFIG FILE!");
+    }
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="HU" lang="HU"> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Xyneo Framework Commands</title>
+        <link rel="stylesheet" type="text/css" href="<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/css/cmd.css" />
+                <script type ="text/javascript" src="<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/jquery.js"></script>
+        <script type ="text/javascript" src="<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/bganim.js"></script>
+        <script type ="text/javascript" src="<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/xyneo.js"></script>
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="jsurl" name="<?php $this -> xUrl(); ?>" ></div>
+            <div id="header">
+                <ul id="top_tabs">
+                    <li id="pd">Project Details</li>
+                    <li id="cnc">Create Controller</li>
+                    <li id="cl">Create Layout</li>
+                    <li id="ch">Create Helper</li>
+                    <li id="c" style="margin-left:50px;">Close</li>
+                </ul>
+            </div><!-- header -->
+            <div id="main">
+                <div class="clr"></div>
+                
+                <div id="pd_page" class="panel_page">
+                    <h1>Project Details</h1><br /><br />
+                    <form id="ajax_form" method="post" action ="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel/saveprojectdata">
+                        <table class="baseform">
+                            <tr>
+                                <td>Project name</td>
+                                <td><input id="p_name" name="name" type="text" value="" /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>Company name</td>
+                                <td><input id="p_company" name="company" type="text" value="" /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>Country</td>
+                                <td><input id="p_country" name="country" type="text" value="" /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>Description</td>
+                                <td><textarea id="p_description" name="description"></textarea></td>       
+                            </tr>
+
+                            <tr>
+                                <td>Email</td>
+                                <td><input type="text" value="" id="p_email" name="email" /></td>       
+                            </tr>
+                            <tr>
+                                <td>&nbsp</td>
+                                <td><input class="button" type="submit" value="Save"  /></td>       
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                
+                <div id="cnc_page" class="panel_page">
+                    <h1>Create New Controller</h1><br /><br />
+                    <form id="controller_ajax_form" method="post" action ="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel/createcontroller">
+                        <table class="baseform">
+                            <tr>
+                                <td>Controller Name</td>
+                                <td><input id="controller_name" name="controller_name" type="text" value="" /></td>       
+                            </tr>
+
+                            <tr>
+                                <td height="30">Create View</td>
+                                <td><input id="controller_view" name="controller_view" type="checkbox" value="1" checked />
+                                <select id="controller_layout" name ="controller_layout" style="width:200px;"></select>
+                                </td>       
+                            </tr>
+
+                            <tr>
+                                <td>Create Model</td>
+                                <td><input id="controller_model" name="controller_model" type="checkbox" value="1" checked /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>       
+                            </tr>
+
+                            <tr>
+                                <td>Description</td>
+                                <td><textarea id="controller_description" name="controller_description"></textarea></td>       
+                            </tr>
+
+                            <tr>
+                                <td>&nbsp</td>
+                                <td><input class="button" type="submit" value="Create"  /></td>       
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                
+                <div id="cl_page" class="panel_page">
+                    <h1>Create New Layout</h1><br /><br />
+                    <form id="layout_ajax_form" method="post" action ="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel/createlayout">
+                        <table class="baseform">
+                            <tr>
+                                <td>Layout Name</td>
+                                <td><input id="layout_name" name="layout_name" type="text" value="" /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>Create Stylesheet</td>
+                                <td><input id="controller_view" name="layout_css" type="checkbox" value="1" checked /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>Create JavaScript</td>
+                                <td><input id="controller_view" name="layout_js" type="checkbox" value="1" checked /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>       
+                            </tr>
+                            
+                            <tr>
+                                <td>Description</td>
+                                <td><textarea id="layout_description" name="layout_description"></textarea></td>       
+                            </tr>
+                            
+                            <tr>
+                                <td>&nbsp</td>
+                                <td><input class="button" type="submit" value="Create"  /></td>       
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                
+                 <div id="ch_page" class="panel_page">
+                    <h1>Create New Helper Class</h1><br /><br />
+                    <form id="helper_ajax_form" method="post" action ="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel/createhelper">
+                        <table class="baseform">
+                            <tr>
+                                <td>Helper Class Name</td>
+                                <td><input id="helper_name" name="helper_name" type="text" value="" /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>Add to includes.php</td>
+                                <td><input id="helper_includes" name="helper_includes" type="checkbox" value="1" checked /></td>       
+                            </tr>
+
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>       
+                            </tr>
+                            
+                            <tr>
+                                <td>Description</td>
+                                <td><textarea id="helper_description" name="helper_description"></textarea></td>       
+                            </tr>
+                            
+                            <tr>
+                                <td>&nbsp</td>
+                                <td><input class="button" type="submit" value="Create"  /></td>       
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                
+            </div><!-- main -->
+        </div>
+    </body>
+</html>
