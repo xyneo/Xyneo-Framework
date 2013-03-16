@@ -1,3 +1,15 @@
 Xyneo FrameWork is a powerful open source PHP MVC framework that helps you develop modern web applications in an easy and effective way.
 
 Xyneo FrameWork gives your PHP application a great skeleton to keep your code well structured. It has several built-in methods and classes including form validation and data filter which can save you time. Use the Xyneo Panel in developer mode so that you can generate your models, views, controllers, helpers and layouts on a graphic interface.
+
+------------------------------- INSTALLION ---------------------------------
+
+1. Copy all files into the root directory of your web application.
+
+2. Set up your config.php file in myapp/config/ directory
+
+3. Make sure mod_rewrite is enabled.
+
+4. If you are about to use a database, enable PDO for the appropriate driver(s).
+
+5. Start coding! Enjoy!

@@ -237,6 +237,7 @@ class XyneoModel
             $src = imagecreatefrompng($uploadedfile);
         else 
             $src = imagecreatefromgif($uploadedfile);
+        imagealphablending($src,true);
 
         list($width,$height)=getimagesize($uploadedfile);
         
@@ -308,6 +309,8 @@ class XyneoModel
         
         
         $tmp=imagecreatetruecolor($newwidth,$newheight);
+        imagealphablending($tmp,false);
+        imagesavealpha($tmp,true);
         imagecopyresampled($tmp,$src,0,0,0,0,$newwidth,$newheight,
         $width,$height);
         
@@ -316,7 +319,12 @@ class XyneoModel
         else
             $filename = $image;
         
-        imagejpeg($tmp,$location.$filename,100);
+        if($extension=="jpg" || $extension=="jpeg" )
+            imagejpeg($tmp,$location.$filename,100);
+        else if($extension=="png")
+            imagepng($tmp,$location.$filename,9,PNG_ALL_FILTERS);
+        else 
+            imagegif($tmp,$location.$filename);
 
         imagedestroy($src);
         imagedestroy($tmp);

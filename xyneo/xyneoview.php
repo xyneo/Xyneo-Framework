@@ -303,4 +303,34 @@ class XyneoView
         
     }
     
+    protected function xShorten($str,$length,$unit = false){
+        
+        if(!$unit)
+            $unit = 'chars';
+        
+        switch($unit)
+        {
+            case 'chars' :
+                    if(strlen($str)>$length){
+                    $str=substr($str,0,$length);
+                    $str.='...';
+                }
+                echo $str;
+            break;
+            
+            case 'words' :
+                    $words = explode(' ', $str);
+                    if(sizeof($words)>$length){
+                    $str=implode(' ',array_slice($words,0,$length));
+                    $str.='...';
+                }
+                echo $str;
+            break;
+            
+            default :
+                echo 'Invalid value for unit. It must be empty or "chars" or "words"';
+            break;
+        }
+    }
+    
 }
