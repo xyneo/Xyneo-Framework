@@ -10,10 +10,12 @@
             jquery.src = '<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/jquery.js';
             document.head.appendChild(jquery);
         }
-        
-        var developer = document.createElement('script');
-        developer.src = '<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/developer.js';
-        document.head.appendChild(developer);
+        setTimeout(function(){
+            var developer = document.createElement('script');
+            developer.src = '<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/developer.js';
+            document.head.appendChild(developer);
+        },1000
+        );
     }
 </script>
 
