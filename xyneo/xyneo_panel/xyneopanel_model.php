@@ -390,7 +390,7 @@ Description: '.$desc.'
                 $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
 
                 $helper_template='<?php
-        ';
+';
         if(AUTO_COMMENT_PHP_FILES == 'on')$helper_template.='
 /*
 * Helper name: '.ucfirst($name).'
@@ -400,8 +400,9 @@ Description: '.$desc.'
 ';
         $helper_template.='class '.ucfirst($name).'_Helper extends XyneoHelper
 {
-    function __construct(){
-    parent::__construct();
+    function __construct()
+    {
+        parent::__construct();
     }
 }
         ';
