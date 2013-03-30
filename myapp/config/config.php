@@ -19,6 +19,7 @@ define('LAYOUT_DOCTYPE'             , 'XHTML1.0_TRANSITIONAL');
  * HTML5
 */
 
+define('LAYOUT_CHARSET'             , 'UTF-8');
 define('LAYOUT_LANGUAGE'            , 'en');
 
 define('AUTO_COMMENT_PHP_FILES'     , 'on');

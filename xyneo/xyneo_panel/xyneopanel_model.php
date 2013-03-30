@@ -275,7 +275,7 @@ Description: '.$desc.'
 
             $layout_template_top.='
             <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta http-equiv="Content-Type" content="text/html; charset='.strtolower(LAYOUT_CHARSET).'" />
                 <title><?php echo $this->page_title; ?></title>';
                 if($css==1)
                     $layout_template_top.= '

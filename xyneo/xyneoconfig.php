@@ -17,6 +17,7 @@ class XyneoConfig {
             'ERROR_PAGE',
             'SHUTDOWN_PAGE',
             'LAYOUT_DOCTYPE',
+            'LAYOUT_CHARSET',
             'LAYOUT_LANGUAGE',
             'AUTO_COMMENT_PHP_FILES',
             'AUTO_COMMENT_JS_FILES',
@@ -44,6 +45,12 @@ class XyneoConfig {
             
             
         }
+        
+        $available_charsets = mb_list_encodings();
+        
+        if( ! in_array(LAYOUT_CHARSET,$available_charsets))
+                
+                die("Invalid value for LAYOUT_CHARSET. Chech your config file");
 
     }
     

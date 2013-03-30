@@ -311,8 +311,8 @@ class XyneoView
         switch($unit)
         {
             case 'chars' :
-                    if(mb_strlen($str)>$length){
-                    $str=substr($str,0,$length);
+                    if(mb_strlen($str,LAYOUT_CHARSET)>$length){
+                    $str=mb_substr($str,0,$length,LAYOUT_CHARSET);
                     $str.='...';
                 }
                 echo $str;
