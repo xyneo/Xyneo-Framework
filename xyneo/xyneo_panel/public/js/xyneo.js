@@ -1,6 +1,6 @@
 $(document).ready(function(){
     
-    var url = $("#jsurl").attr("name");
+    var url = $("base:first").attr("href");
     
     
     $.getJSON("xyneo_project.json",function(data){

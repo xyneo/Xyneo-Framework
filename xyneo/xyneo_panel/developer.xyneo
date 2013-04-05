@@ -1,7 +1,7 @@
 
 
 
-<!-- Xyneo Panel link ----------------------------------------------------------------------------- -->
+<!-- Xyneo Panel link -->
 
 <script type ="text/javascript">
     window.onload = function(){
@@ -19,7 +19,9 @@
     }
 </script>
 
-    <input type="hidden" value="<?php echo XyneoApplication::getRootUrl(); ?>" id="xyneo_jsurl" />
+    <form action="#" method="get">
+      <input type="hidden" value="<?php echo XyneoApplication::getRootUrl(); ?>" id="xyneo_jsurl" />
+    </form>
     <a id="xyneo_panel_logo" href="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel" target="blank" style="position:fixed;top:0px;left:0px;z-index:400;"><img id="the_xyneo_admin_logo"  style="border:none;" src="<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/img/admin_logo.png" title="Open Xyneo Panel" alt="admin logo" /></a>
     <div id="xyneo_panel_open_info" style="position:fixed;top:0px;left:10px;height:29px;z-index:390;display:none;width:140px;">
         <div id="xyneo_panel_link" style="background:#87abd7;float:left;width:0px;height:27px;border-top:solid 2px #d0e1f5;border-bottom:solid 2px #d0e1f5;">
@@ -30,4 +32,4 @@
         </div>
     </div>
 
-<!-- Xyneo Panel link end ----------------------------------------------------------------------------- -->
+<!-- Xyneo Panel link end  -->

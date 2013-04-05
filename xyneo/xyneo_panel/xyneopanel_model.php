@@ -122,11 +122,13 @@ if(AUTO_COMMENT_PHP_FILES == 'on') $controller_template.='
 $controller_template.='
 class '.ucfirst($name).'_Controller extends XyneoController
 {
-    function __construct(){
-        parent::__construct();       
+    function __construct()
+    {
+        parent::__construct();
     }
 
-    function xyneo(){';
+    function xyneo()
+    {';
         if($view == 1){ $controller_template.='
         $this->view->page_title = "'.$name.'";
         $this->view->xRender("'.strtolower($name).'/'.strtolower($name).'"'.$layout.');'; }
@@ -153,9 +155,7 @@ Description: '.$desc.'
 ';
 
         $view_template.='<br /><br /><br /><br />
-                    <h1 style="color:#b6b6b7;">This is <a href="#" style="color:#2d82b8;text-decoration:none;">'.ucfirst($name).'</a> view.</h1>
-
-        ';
+    <h1 style="color:#b6b6b7;">This is <a href="#" style="color:#2d82b8;text-decoration:none;">'.ucfirst($name).'</a> view.</h1>';
                     fwrite($ourFileHandle,$view_template);
                     fclose($ourFileHandle);
             }
@@ -174,7 +174,8 @@ if(AUTO_COMMENT_PHP_FILES == 'on')$model_template.='/*
 $model_template.='
 class '.ucfirst($name).'_Model extends XyneoModel
 {
-    function __construct(){
+    function __construct()
+    {
         parent::__construct();
     }
 }
@@ -264,7 +265,7 @@ class '.ucfirst($name).'_Model extends XyneoModel
 
                             $layout_template_top='';
         $layout_template_top=$layout_doctype.'
-        '.$layout_language;
+'.$layout_language;
 
         if(AUTO_COMMENT_XYNEO_FILES == 'on') $layout_template_top.='
 <!--
@@ -274,23 +275,22 @@ Description: '.$desc.'
 -->';
 
             $layout_template_top.='
-            <head>
-                <meta http-equiv="Content-Type" content="text/html; charset='.strtolower(LAYOUT_CHARSET).'" />
-                <title><?php echo $this->page_title; ?></title>';
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset='.strtolower(LAYOUT_CHARSET).'" />
+    <title><?php echo $this->page_title; ?></title>';
                 if($css==1)
                     $layout_template_top.= '
-                <link rel="stylesheet" type="text/css" href="<?php $this->xLCss() ?>'.strtolower($name).'_layout.css" />';
+    <link rel="stylesheet" type="text/css" href="<?php $this->xLCss() ?>'.strtolower($name).'_layout.css" />';
                 if(file_exists("public/javascript/jquery.js") and $js==1)
                     $layout_template_top.= '
-                <script type="text/javascript" src="<?php $this->xJs(); ?>jquery.js"></script>';
+    <script type="text/javascript" src="<?php $this->xJs(); ?>jquery.js"></script>';
                 if($js==1)
                     $layout_template_top.= '
-                <script type="text/javascript" src="<?php $this->xLJs(); ?>'.strtolower($name).'_layout.js"></script>';
+    <script type="text/javascript" src="<?php $this->xLJs(); ?>'.strtolower($name).'_layout.js"></script>';
         $layout_template_top.='    
-            </head>
-
-            <body>
-        ';
+  </head>
+  <body>
+    ';
                     fwrite($ourFileHandle,$layout_template_top);
                     fclose($ourFileHandle);
 
@@ -306,9 +306,8 @@ Description: '.$desc.'
 -->';
         $layout_template_bottom.='
 
-            </body>
-        </html>
-        ';
+  </body>
+</html>';
                     fwrite($ourFileHandle,$layout_template_bottom);
                     fclose($ourFileHandle);
 
@@ -324,8 +323,9 @@ Description: '.$desc.'
             * Created: '.date('Y-m-d h:i:s',time()).'
             * Description: '.$desc.'
             */';
-        $layout_template_css.='root { 
-    display: block;
+        $layout_template_css.='root
+{ 
+  display: block;
 }';
                         fwrite($ourFileHandle,$layout_template_css);
                         fclose($ourFileHandle);
@@ -344,9 +344,12 @@ Description: '.$desc.'
 * Description: '.$desc.'
 */';
 
-            $layout_template_js.='$(document).ready(function(){
-
-});';
+            $layout_template_js.='$(document).ready(
+  function()
+  {
+      
+  }
+);';
 
                         fwrite($ourFileHandle,$layout_template_js);
                         fclose($ourFileHandle);
@@ -405,7 +408,7 @@ Description: '.$desc.'
         parent::__construct();
     }
 }
-        ';
+';
 
                 fwrite($ourFileHandle,$helper_template);
                 fclose($ourFileHandle);
