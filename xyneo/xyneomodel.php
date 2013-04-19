@@ -173,165 +173,215 @@ class XyneoModel
          return $ext;
     }
     
-    protected function xImageUpload($inputname,$location,$fname=false,$maxsize=false,$container_width=false,$container_height=false,$force_to_fit=false,$msg=false){
-        
-        if($msg)
-            $messages = $msg;
+    protected function xImageUpload($inputname, $location, $fname=false, $maxsize=false, $container_width=false, $container_height=false, $force_or_crop=false, $msg=false)
+    {
+        if ($msg)
+          $messages = $msg;
         else
-            $messages = array(
-                'xiu_format' => 'Invalid file format!',
-                'xiu_size'   => 'The file size is over the limit!',
-                'xiu_file'   => 'No file was selected!',
-                'xiu_error'  => 'Something went wrong!',
-                'xiu_done'   => 'File uploaded!'
-            );
-        
-        if(!$_SERVER["REQUEST_METHOD"] == "POST") 
-            return array(
-                'message' => $messages['xiu_error'],
-                'sent'    => 0
-            );
-        
-        if(!isset($_FILES[$inputname]) or empty($_FILES[$inputname]))
-            return array(
-                'message' => $messages['xiu_file'],
-                'sent'    => 0
-            );
-        
-        $image          = $_FILES[$inputname]["name"];
-        $uploadedfile   = $_FILES[$inputname]['tmp_name'];
+          $messages = array(
+            "xiu_format" => "Invalid file format!",
+            "xiu_size"   => "The file size is over the limit!",
+            "xiu_file"   => "No file was selected!",
+            "xiu_error"  => "Something went wrong!",
+            "xiu_done"   => "File uploaded!"
+          );
 
-        if (!$image) 
-            return array(
-                'message' => $messages['xiu_file'],
-                'sent'    => 0
-            );
+        if (!$_SERVER["REQUEST_METHOD"] == "POST")
+          return array(
+            "message" => $messages["xiu_error"],
+            "sent"    => 0
+          );
 
-        $filename       = stripslashes($image);
-        $extension      = $this -> xGetExtension($filename);
+        if (!isset($_FILES[$inputname]) || empty($_FILES[$inputname]))
+          return array(
+            "message" => $messages["xiu_file"],
+            "sent"    => 0
+          );
+
+        $image           = $_FILES[$inputname]["name"];
+        $uploaded_file   = $_FILES[$inputname]["tmp_name"];
+
+        if (!$image)
+          return array(
+            "message" => $messages["xiu_file"],
+            "sent"    => 0
+          );
+
+        $file_name      = stripslashes($image);
+        $extension      = $this->xGetExtension($file_name);
         $extension      = strtolower($extension);
-        if (($extension != "jpg") and ($extension != "jpeg") and ($extension != "png") and ($extension != "gif"))
-            return array(
-                'message' => $messages['xiu_format'],
-                'sent'    => 0
-            );
-        
-        $size=filesize($uploadedfile);
-        if(!$size)
-            return array(
-                'message' => $messages['xiu_error'],
-                'sent'    => 0
-            );
-        
-        
-        
-        if ($maxsize and $size > $maxsize*1024)
-            return array(
-                'message' => $messages['xiu_size'],
-                'sent'    => 0
-            );
+        if ($extension != "jpg" && $extension != "jpeg" && $extension != "png" && $extension != "gif")
+          return array(
+            "message" => $messages["xiu_format"],
+            "sent"    => 0
+          );
 
-        if($extension=="jpg" || $extension=="jpeg" )
-            $src = imagecreatefromjpeg($uploadedfile);
-        else if($extension=="png")
-            $src = imagecreatefrompng($uploadedfile);
-        else 
-            $src = imagecreatefromgif($uploadedfile);
-        imagealphablending($src,true);
+        $size = filesize($uploaded_file);
+        if (!$size)
+          return array(
+            "message" => $messages["xiu_error"],
+            "sent"    => 0
+          );
 
-        list($width,$height)=getimagesize($uploadedfile);
-        
-        $newheight = $height;
-        $newwidth  = $width;
-        
-        if($container_width and !$container_height and $container_width < $width and !$force_to_fit){
-            $newwidth=$container_width;
-            $newheight=$newwidth*($height/$width);
-        }
-        elseif(!$container_width and $container_height and $container_height < $height and !$force_to_fit){
-            $newheight=$container_height;
-            $newwidth=$newheight/($height/$width);
-        }
-        elseif($container_width and $container_height and !$force_to_fit){
-            if($container_width < $width or $container_height < $height){
-                $img_aspect_ratio = $width/$height;
-                $ctr_aspect_ratio = $container_width/$container_height;
-                
-                if($ctr_aspect_ratio > 1){
-                    if($img_aspect_ratio <= $ctr_aspect_ratio){
-                        $newheight=$container_height;
-                        $newwidth=$newheight/($height/$width);
-                    }           
-                    else{
-                        $newwidth=$container_width;
-                        $newheight=$newwidth*($height/$width);
-                    }
-                }
-                
-                if($ctr_aspect_ratio < 1){
-                    if($img_aspect_ratio <= $ctr_aspect_ratio){
-                        $newheight=$container_height;
-                        $newwidth=$newheight/($height/$width);
-                    }           
-                    else{                       
-                        $newwidth=$container_width;
-                        $newheight=$newwidth*($height/$width);
-                    }
-                }
-                
-                if($ctr_aspect_ratio == 1){
-                   if($width > $height){
-                        $newwidth=$container_width;
-                        $newheight=$newwidth*($height/$width);
-                    }           
-                    else{
-                        $newheight=$container_height;
-                        $newwidth=$newheight/($height/$width);
-                    } 
-                }
-            }
-        }
-        
-        if($force_to_fit == 1){
-            if($container_width and !$container_height){
-                $newwidth=$container_width;
-                $newheight=$newwidth*($height/$width);
-            }           
-            elseif(!$container_width and $container_height){
-                $newheight=$container_height;
-                $newwidth=$newheight/($height/$width);
-            }
-            elseif($container_width and $container_height){
-                $newwidth  = $container_width;
-                $newheight = $container_height;
-            }
-        }
-        
-        
-        $tmp=imagecreatetruecolor($newwidth,$newheight);
-        imagealphablending($tmp,false);
-        imagesavealpha($tmp,true);
-        imagecopyresampled($tmp,$src,0,0,0,0,$newwidth,$newheight,
-        $width,$height);
-        
-        if($fname)
-            $filename = $fname.".".$extension;
+        if ($maxsize and $size > $maxsize * 1024)
+          return array(
+            "message" => $messages["xiu_size"],
+            "sent"    => 0
+          );
+
+        if ($extension == "jpg" || $extension == "jpeg")
+          $src = imagecreatefromjpeg($uploaded_file);
+        elseif ($extension == "png")
+          $src = imagecreatefrompng($uploaded_file);
         else
-            $filename = $image;
-        
-        if($extension=="jpg" || $extension=="jpeg" )
-            imagejpeg($tmp,$location.$filename,100);
-        else if($extension=="png")
-            imagepng($tmp,$location.$filename,9,PNG_ALL_FILTERS);
-        else 
-            imagegif($tmp,$location.$filename);
+          $src = imagecreatefromgif($uploaded_file);
+        imagealphablending($src, true);
+
+        list($width, $height) = getimagesize($uploaded_file);
+
+        $new_height = $height;
+        $new_width  = $width;
+
+        switch ($force_or_crop)
+        {
+          case "crop":
+            if ($container_width && !$container_height)
+            {
+              $new_width  = $container_width;
+              $new_height = $new_width * ($height / $width);
+            }           
+            elseif (!$container_width && $container_height)
+            {
+              $new_height = $container_height;
+              $new_width  = $new_height / ($height / $width);
+            }
+            elseif ($container_width && $container_height)
+            {
+              $new_width  = $container_width;
+              $new_height = $container_height;
+            }
+
+            $top  = ($new_height - $height) / 2;
+            $left = ($new_width - $width) / 2;
+
+            $tmp = imagecreatetruecolor($new_width, $new_height);
+            imagefill($tmp, 0, 0, imagecolorallocatealpha($tmp, 0, 0, 0, 127));
+            imagecolortransparent($tmp, imagecolorallocatealpha($tmp, 0, 0, 0, 127));
+            imagealphablending($tmp, false);
+            imagesavealpha($tmp, true);
+            imagecopy($tmp, $src, $left, $top, 0, 0, $width, $height);
+          break;
+          case "force":
+            if ($container_width && !$container_height)
+            {
+              $new_width  = $container_width;
+              $new_height = $new_width * ($height / $width);
+            }           
+            elseif (!$container_width && $container_height)
+            {
+              $new_height = $container_height;
+              $new_width  = $new_height / ($height / $width);
+            }
+            elseif ($container_width && $container_height)
+            {
+              $new_width  = $container_width;
+              $new_height = $container_height;
+            }
+
+            $tmp = imagecreatetruecolor($new_width, $new_height);
+            imagecolortransparent($tmp, imagecolorallocatealpha($tmp, 0, 0, 0, 127));
+            imagealphablending($tmp, false);
+            imagesavealpha($tmp, true);
+            imagecopyresampled($tmp, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+          break;
+          default:
+            if ($container_width && !$container_height && $container_width < $width)
+            {
+              $new_width  = $container_width;
+              $new_height = $new_width * ($height / $width);
+            }
+            elseif (!$container_width && $container_height && $container_height < $height)
+            {
+              $new_height = $container_height;
+              $new_width  = $new_height / ($height / $width);
+            }
+            elseif ($container_width && $container_height)
+            {
+              if ($container_width < $width || $container_height < $height)
+              {
+                $img_aspect_ratio = $width / $height;
+                $ctr_aspect_ratio = $container_width / $container_height;
+
+                if ($ctr_aspect_ratio > 1)
+                {
+                  if($img_aspect_ratio <= $ctr_aspect_ratio)
+                  {
+                    $new_height = $container_height;
+                    $new_width  = $new_height / ($height / $width);
+                  }           
+                  else
+                  {
+                    $new_width  = $container_width;
+                    $new_height = $new_width * ($height / $width);
+                  }
+                }
+
+                if ($ctr_aspect_ratio < 1)
+                {
+                  if ($img_aspect_ratio <= $ctr_aspect_ratio)
+                  {
+                    $new_height = $container_height;
+                    $new_width  = $new_height / ($height / $width);
+                  }           
+                  else
+                  {                       
+                    $new_width  = $container_width;
+                    $new_height = $new_width * ($height / $width);
+                  }
+                }
+
+                if ($ctr_aspect_ratio == 1)
+                {
+                  if ($width > $height)
+                  {
+                    $new_width  = $container_width;
+                    $new_height = $new_width * ($height / $width);
+                  }           
+                  else
+                  {
+                    $new_height = $container_height;
+                    $new_width  = $new_height / ($height / $width);
+                  } 
+                }
+              }
+            }
+
+            $tmp = imagecreatetruecolor($new_width, $new_height);
+            imagecolortransparent($tmp, imagecolorallocatealpha($tmp, 0, 0, 0, 127));
+            imagealphablending($tmp, false);
+            imagesavealpha($tmp, true);
+            imagecopyresampled($tmp, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+          break;
+        }
+
+        if ($fname)
+          $file_name = $fname .".". $extension;
+        else
+          $file_name = $image;
+
+        if ($extension == "jpg" || $extension == "jpeg")
+          imagejpeg($tmp, $location . $file_name, 100);
+        elseif ($extension == "png")
+          imagepng($tmp, $location . $file_name, 9, PNG_ALL_FILTERS);
+        else
+          imagegif($tmp, $location . $file_name);
 
         imagedestroy($src);
         imagedestroy($tmp);
-        
+
         return array(
-            'message' => $messages['xiu_done'],
-            'sent'    => 1
+          "message" => $messages["xiu_done"],
+          "sent"    => 1
         );
     }
     
