@@ -22,7 +22,7 @@ define('LAYOUT_DOCTYPE'             , 'XHTML1.0_TRANSITIONAL');
 define('LAYOUT_CHARSET'             , 'UTF-8');
 define('LAYOUT_LANGUAGE'            , 'en');
 
-define('AUTO_COMMENT_PHP_FILES'     , 'on');
+define('AUTO_COMMENT_PHP_FILES'     , 'off');
 define('AUTO_COMMENT_JS_FILES'      , 'off');
 define('AUTO_COMMENT_CSS_FILES'     , 'off');
 define('AUTO_COMMENT_XYNEO_FILES'   , 'off');
