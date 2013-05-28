@@ -33,6 +33,7 @@ $xyneo_cores = array (
     
     'xyneocontroller',
     'xyneovalidate',
+    'xyneofile',
     'xyneomodel',
     'xyneoapplication',
     'xyneoview',

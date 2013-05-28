@@ -146,6 +146,25 @@ class XyneoValidate
         return true;
     }
     
+    // Validate username fields
+    
+    public function xIsUsername($username,$min_length = false)
+    {
+        
+        $username = trim($username);
+        
+        if($min_length){
+            if(mb_strlen($username,LAYOUT_CHARSET)<$min_length)
+                return false;
+        }
+        
+        
+        if(!preg_match("/^(?:\p{L}|[\-])+$/u", $username))
+                return false;
+        
+        return true;
+    }
+    
 } 
 
 ?>
