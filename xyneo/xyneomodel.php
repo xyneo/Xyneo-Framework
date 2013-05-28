@@ -10,149 +10,12 @@ class XyneoModel
         
         if(DB_ALLOW == 'on')
             
-            $this -> db = new XyneoDataBase();
+            $this -> db         = new XyneoDataBase();
+            $this -> validate   = new XyneoValidate();
         
     }
     
-//  Validating email address
-    
-    protected function xValidEmail($email)
-    {
-        
-        if(empty($email))
-            
-            die('No email given to validate.');
-       
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-        {
-            
-            return false;
-            
-        }
-        
-        else{
-            
-            return true;
-        
-        }
-        
-    }
- 
-// Basic built-in data filter 
-    
-    protected function xFilter($str)
-    {
-        
-        return trim(strip_tags($str));
-        
-    }
-    
-// Password strength checker
-    
-    protected function xStrongPassword($password,$minlength,$maxlength,$strength)
-    {
-        
-        if(empty($strength))
-            
-            die('No strength given to password checker.');
-        
-        if(empty($maxlength))
-            
-            die('No maxlength given to password checker.');
-        
-        if(empty($minlength))
-            
-            die('No minlength given to password checker.');
-        
-        
-        $password=trim($password);
-        
-        $actual_strength = 0;
-        
-        if(strlen($password)<$minlength)
-        {
-            
-            return false;
-            
-        }
-        
-        if(strlen($password)>$maxlength)
-        {
-            
-            return false;
-            
-        }
-        
-        if (preg_match("/[a-z]/", $password) && preg_match("/[A-Z]/", $password))
-                
-            $actual_strength++;
-        
-        if (preg_match("/[0-9]/", $password))
-                
-            $actual_strength++;
-        
-        if (preg_match("/.[!,@,#,$,%,^,&,*,?,_,~,-,Ã‚Â£,(,)]/", $password))
-                
-            $actual_strength++;
-        
-        if($actual_strength<$strength)
-            
-            return false;
-        
-        return true;
-    }
 
-// Checks if the given value an age of a human
-    
-    protected function xIsAge($age)
-    {
-        
-        
-        if(!is_numeric($age))
-            
-            return false;
-        
-        if($age<1 or $age>120)
-            
-            return false;
-        
-        else
-            
-            return true;
-        
-    }
-    
-// Validate URL 
-    
-    protected function xIsUrl($url)
-    {
-       
-        return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
-    }
-    
-// Validate full name fields
-    
-    protected function xIsFullname($fullname)
-    {
-        
-        $result = explode(' ',$fullname);
-        
-        if(!isset($result[0]) or !isset($result[1]))
-            
-            return false;
-        
-        $f_name = trim($result[0]);
-        
-        $l_name = trim($result[1]);
-        
-        if(strlen($f_name)>= 2 && strlen($l_name)>= 2)
-            
-            return true;
-        
-        else
-            
-            return false;
-    }
     
 // Returns the extension from a filename
     
@@ -260,16 +123,35 @@ class XyneoModel
               $new_width  = $container_width;
               $new_height = $container_height;
             }
-
-            $top  = ($new_height - $height) / 2;
-            $left = ($new_width - $width) / 2;
+            
+            
+            if($width / $height < $new_width/$new_height){
+                $xtra_new_width = $new_width;
+                $xtra_new_height = $xtra_new_width * ($height / $width);
+                
+            }
+            else {
+                $xtra_new_height = $new_height;
+                $xtra_new_width  = $xtra_new_height / ($height / $width);
+            }
+            
+            
+            $top  = ($new_height - $xtra_new_height) / 2;
+            $left = ($new_width - $xtra_new_width) / 2;
+            
+            $ns = imagecreatetruecolor($xtra_new_width, $xtra_new_height);
+            imagecolortransparent($ns, imagecolorallocatealpha($ns, 0, 0, 0, 127));
+            imagealphablending($ns, false);
+            imagesavealpha($ns, true);
+            imagecopyresampled($ns, $src, 0, 0, 0, 0, $xtra_new_width, $xtra_new_height, $width, $height);
 
             $tmp = imagecreatetruecolor($new_width, $new_height);
             imagefill($tmp, 0, 0, imagecolorallocatealpha($tmp, 0, 0, 0, 127));
             imagecolortransparent($tmp, imagecolorallocatealpha($tmp, 0, 0, 0, 127));
             imagealphablending($tmp, false);
             imagesavealpha($tmp, true);
-            imagecopy($tmp, $src, $left, $top, 0, 0, $width, $height);
+            imagecopy($tmp, $ns, $left, $top, 0, 0, $xtra_new_width, $xtra_new_height);
+            imagedestroy($ns);
           break;
           case "force":
             if ($container_width && !$container_height)
@@ -381,7 +263,8 @@ class XyneoModel
 
         return array(
           "message" => $messages["xiu_done"],
-          "sent"    => 1
+          "sent"    => 1,
+          "file"=> $file_name
         );
     }
     

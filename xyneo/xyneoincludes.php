@@ -32,6 +32,7 @@ else
 $xyneo_cores = array (
     
     'xyneocontroller',
+    'xyneovalidate',
     'xyneomodel',
     'xyneoapplication',
     'xyneoview',
