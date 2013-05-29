@@ -9,10 +9,6 @@ class XyneoValidate
     
     public function xValidEmail($email)
     {
-        
-        if(empty($email))
-            
-            die('No email given to validate.');
        
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
         {
@@ -163,6 +159,111 @@ class XyneoValidate
                 return false;
         
         return true;
+    }
+    
+    // Validate an integer
+    
+    public function xIsInt($input_data)
+    {
+        
+        if((string)(int)$input_data != $input_data)
+            
+            return false;
+        
+        return true;
+        
+    }
+    
+    // Validate a natural 
+    
+    public function xIsN($input_data,$zero_allowed = true)
+    {
+        
+        $min = 0;
+        
+        if(!$zero_allowed)
+            
+            $min = 1;
+        
+        
+        if((string)(int)$input_data != $input_data or $input_data < $min)
+            
+            return false;
+        
+        return true;
+        
+    }
+    
+    // Validate a number in a range 
+    
+    public function xIsInRange($input_data,$min,$max)
+    {
+        
+        if(!is_numeric($input_data))
+            
+            return false;
+        
+        if($input_data < $min or $input_data > $max)
+            
+            return false;
+        
+        return true;
+        
+    }
+    
+    // Validate string exact length 
+    
+    public function xIsLong($input_data,$length)
+    {
+        
+        if(mb_strlen($input_data,LAYOUT_CHARSET) != $length)
+        
+                return false;
+        
+        return true;
+        
+        
+    }
+    
+    
+    // Validate string min length 
+    
+    public function xIsLonger($input_data,$length)
+    {
+        
+        if(mb_strlen($input_data,LAYOUT_CHARSET) <= $length)
+        
+                return false;
+        
+        return true;
+                
+    }
+    
+    // Validate string max length 
+    
+    public function xIsShorter($input_data,$length)
+    {
+        
+        if(mb_strlen($input_data,LAYOUT_CHARSET) >= $length)
+        
+                return false;
+        
+        return true;
+                
+    }
+    
+    // Validate string length between two values
+    
+    public function xIsBetween($input_data,$min_length,$max_length)
+    {
+        
+        
+        if(mb_strlen($input_data,LAYOUT_CHARSET) < $min_length or mb_strlen($input_data,LAYOUT_CHARSET) > $max_length )
+        
+                return false;
+        
+        return true;
+                
     }
     
 } 
