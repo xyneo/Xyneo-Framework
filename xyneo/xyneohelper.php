@@ -2,7 +2,7 @@
 
 class XyneoHelper extends Xyneomodel
 {
-    function __construct(){ 
+    public function __construct(){ 
         parent::__construct();
     }
 }

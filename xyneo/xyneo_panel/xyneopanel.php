@@ -3,42 +3,39 @@
 class XyneoPanel extends XyneoController
 {
     
-    function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    function xyneo(){
-        $this -> view  -> xRender('');
+    public function xyneo()
+    {
+        $this->view ->xRender('');
     }
     
-    function saveProjectData(){
-        
+    public function saveProjectData()
+    {
         $this->model->saveProjectData();
-        
     }
     
-    function refreshLayouts(){
-        
-        $this->model->refreshLayouts();
-        
+    public function refreshLayouts()
+    {
+        $this->model->refreshLayouts();  
     }
     
-    function createController(){
-        
-        $this->model->createController();
-        
+    public function createController()
+    {
+        $this->model->createController();  
     }
     
-    function createLayout(){
-        
-        $this->model->createLayout();
-        
+    public function createLayout()
+    {
+        $this->model->createLayout(); 
     }
     
-    function createHelper(){
-        
+    public function createHelper()
+    {
         $this->model->createHelper();
-        
     }
     
 }

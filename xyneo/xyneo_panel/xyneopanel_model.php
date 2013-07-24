@@ -1,28 +1,27 @@
 <?php
-
+// @TODO PSR2 rewrite, cleaning
 class XyneoPanel_model extends XyneoModel
 {
     
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
     }
     
     function saveProjectData()
     {
-        
-        if(DEVELOPER_MODE == 'off')
+        if (DEVELOPER_MODE == 'off') {
             die("DEVELOPER MODE IS OFF!");
-        elseif(DEVELOPER_MODE != 'on'){
+        } elseif(DEVELOPER_MODE != 'on') {
             die("INVALID VALUE FOR DEVELOPER MODE! CHECK YOUR CONFIG FILE!");
         }
-
         
-        if(isset($_POST['name'])){
-            $name        = htmlspecialchars($_POST['name']);
-            $company_name= htmlspecialchars($_POST['company']);
-            $country     = htmlspecialchars($_POST['country']);
+        if (isset($_POST['name'])) {
+            $name = htmlspecialchars($_POST['name']);
+            $company_name = htmlspecialchars($_POST['company']);
+            $country = htmlspecialchars($_POST['country']);
             $description = htmlspecialchars($_POST['description']);
-            $email       = htmlspecialchars($_POST['email']);
+            $email = htmlspecialchars($_POST['email']);
 
             $data = json_encode(array(
                 "name"          =>  $name,
@@ -45,15 +44,14 @@ class XyneoPanel_model extends XyneoModel
     
     function refreshLayouts()
     {
-        
-        if(DEVELOPER_MODE == 'off')
+        if (DEVELOPER_MODE == 'off') {
             die("DEVELOPER MODE IS OFF!");
-        elseif(DEVELOPER_MODE != 'on'){
+        } elseif(DEVELOPER_MODE != 'on') {
             die("INVALID VALUE FOR DEVELOPER MODE! CHECK YOUR CONFIG FILE!");
         }
-
         
         $result = '<option value="0.-">-without layout-</option>';
+        
         if ($layouts = opendir('myapp/layouts')) {
             while (false !== ($entry = readdir($layouts))) {
                 if ($entry != "." && $entry != ".." && is_dir('myapp/layouts/'.$entry)) {
@@ -62,57 +60,63 @@ class XyneoPanel_model extends XyneoModel
             }
             closedir($layouts);
         }
-        echo $result;
-        
+        echo $result; 
     }
     
     function createController()
     {
-        
-        if(DEVELOPER_MODE == 'off')
+        if (DEVELOPER_MODE == 'off') {
             die("DEVELOPER MODE IS OFF!");
-        elseif(DEVELOPER_MODE != 'on'){
+        } elseif(DEVELOPER_MODE != 'on') {
             die("INVALID VALUE FOR DEVELOPER MODE! CHECK YOUR CONFIG FILE!");
         }
 
-        if(isset($_POST['controller_name'])){
+        if (isset($_POST['controller_name'])) {
             $name        = $_POST['controller_name'];
             $desc        = $_POST['controller_description'];
 
-            if($_POST['controller_layout'] == '0.-')
+            if ($_POST['controller_layout'] == '0.-') {
                 $layout='';
-            else
+            } else {
                 $layout =', "'.$_POST['controller_layout'].'"';
-
-            if(isset($_POST['controller_view']))
+            }
+            
+            if (isset($_POST['controller_view'])) {
                 $view=1;
-            else
+            } else {
                 $view=0;
-
-            if(isset($_POST['controller_model']))
-                $model=1;
-            else
-                $model=0; 
-
-            if(!preg_match('/^[A-Za-z0-9_]+$/',$name))
-                    die('Invalid controller name!');
-            if(file_exists("myapp/controllers/".strtolower($name)."_controller.php"))
-                    die("This controller already exists!");
-
-            if($view==1){
-                if(file_exists("myapp/views/".strtolower($name)."/".strtolower($name).".xyneo"))
+            }
+            
+            if (isset($_POST['controller_model'])) {
+                $model=1; 
+            } else {
+                $model=0;
+            }
+            
+            if (!preg_match('/^[A-Za-z0-9_]+$/',$name)) {
+                die('Invalid controller name!');
+            }
+                    
+            if (file_exists("myapp/controllers/".strtolower($name)."_controller.php")) {
+                die("This controller already exists!");
+            }
+            
+            if ($view == 1) {
+                if (file_exists("myapp/views/".strtolower($name)."/".strtolower($name).".xyneo")) {
                     die("This view already exists!");
+                }        
             }
 
-            if($model==1){
-                if(file_exists("myapp/models/".strtolower($name)."_model.php"))
+            if ($model==1) {
+                if (file_exists("myapp/models/".strtolower($name)."_model.php")) {
                     die("This model already exists!");
+                } 
             }
 
 
             $ourFileName = "myapp/controllers/".strtolower($name)."_controller.php";
             $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
-            $controller_template='<?php if ( ! defined("XYNEO") ) die("Direct access denied!");';
+            $controller_template = '<?php if ( ! defined("XYNEO") ) die("Direct access denied!");';
 if(AUTO_COMMENT_PHP_FILES == 'on') $controller_template.='
 /*
 * Controller name: '.ucfirst($name).'
@@ -137,16 +141,17 @@ class '.ucfirst($name).'_Controller extends XyneoController
 }
 ';
 
-                fwrite($ourFileHandle,$controller_template);
+            fwrite($ourFileHandle,$controller_template);
             fclose($ourFileHandle);
 
-            if($view==1){
-                if(!is_dir("myapp/views/".strtolower($name)))
+            if ($view == 1) {
+                if (!is_dir("myapp/views/".strtolower($name))) {
                     mkdir ("myapp/views/".strtolower($name));
-                    $ourFileName = "myapp/views/".strtolower($name)."/".strtolower($name).".xyneo";
-                    $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
-                    $view_template='';
-                    if(AUTO_COMMENT_XYNEO_FILES == 'on')
+                }
+                $ourFileName = "myapp/views/".strtolower($name)."/".strtolower($name).".xyneo";
+                $ourFileHandle = fopen($ourFileName, 'w') or die("can't open file");
+                $view_template='';
+                if (AUTO_COMMENT_XYNEO_FILES == 'on')
                             $view_template='<!--
 View name: '.ucfirst($name).'
 Created: '.date('Y-m-d h:i:s',time()).'

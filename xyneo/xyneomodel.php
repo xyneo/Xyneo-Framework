@@ -7,34 +7,23 @@ class XyneoModel
 
     public function __construct()
     {
+        if (DB_ALLOW == 'on') {
+            $this->db         = new XyneoDataBase();
+        }
         
-        if(DB_ALLOW == 'on')
-            
-            $this -> db         = new XyneoDataBase();
-            $this -> validate   = new XyneoValidate();
-            $this -> file       = new XyneoFile();
-        
+        $this->validate   = new XyneoValidate();
+        $this->file       = new XyneoFile();       
     }
     
     
     
     protected function xSetMessage($msg = false)
     {
-    
-        if ($msg)
-        {
-            
+        if ($msg) {
             $_SESSION['xyneomessage'] = $msg;
-            
-        }
-        
-        else
-        {
-            
-            $_SESSION['xyneomessage'] = "ERROR";
-            
-        }
-        
+        } else {
+            $_SESSION['xyneomessage'] = "MESSAGE";
+        }  
     }
 
 }

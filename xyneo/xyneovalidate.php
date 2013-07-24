@@ -3,89 +3,67 @@
 // This is the Xyneo Framework inbuilt form validation class
 
 class XyneoValidate
-{
-    
+{    
     // Validating email address
     
     public function xValidEmail($email)
     {
-       
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-        {
-            
-            return false;
-            
-        }
-        
-        else{
-            
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;  
+        } else {
             return true;
-        
-        }
-        
+        }    
     }
     
     // Basic built-in data filter 
     
-    protected function xFilter($str)
+    public function xFilter($str)
     {
-        
         return trim(strip_tags($str));
-        
     }
-    
     
     // Password strength checker
     
-    public function xStrongPassword($password,$minlength,$maxlength,$strength)
+    public function xStrongPassword($password, $minlength, $maxlength, $strength)
     {
-        
-        if(empty($strength))
-            
+        if (empty($strength)) {
             die('No strength given to password checker.');
+        }
         
-        if(empty($maxlength))
-            
+        if (empty($maxlength)) {
             die('No maxlength given to password checker.');
+        }
         
-        if(empty($minlength))
-            
+        if (empty($minlength)) {
             die('No minlength given to password checker.');
+        }
         
-        
-        $password=trim($password);
-        
+        $password=trim($password); 
         $actual_strength = 0;
         
-        if(strlen($password)<$minlength)
-        {
-            
+        if (mb_strlen($password, LAYOUT_CHARSET) < $minlength) {
             return false;
-            
         }
         
-        if(strlen($password)>$maxlength)
-        {
-            
+        if (mb_strlen($password, LAYOUT_CHARSET) > $maxlength) {
             return false;
-            
         }
         
-        if (preg_match("/[a-z]/", $password) && preg_match("/[A-Z]/", $password))
-                
+        if (preg_match("/[a-z]/", $password) && preg_match("/[A-Z]/", $password)) {
             $actual_strength++;
+        }
         
-        if (preg_match("/[0-9]/", $password))
-                
+        if (preg_match("/[0-9]/", $password)) {
             $actual_strength++;
+        }
         
-        if (preg_match("/.[!,@,#,$,%,^,&,*,?,_,~,-,Ã‚Â£,(,)]/", $password))
-                
+        if (preg_match("/.[!,@,#,$,%,^,&,*,?,_,~,-,Ã‚Â£,(,)]/", $password)) {
             $actual_strength++;
+        }
         
-        if($actual_strength<$strength)
-            
+        if ($actual_strength < $strength) {
             return false;
+        }
         
         return true;
     }
@@ -94,27 +72,21 @@ class XyneoValidate
     
     public function xIsAge($age)
     {
-        
-        
-        if((string)(int)$age != $age)
-            
+        if((string)(int)$age != $age) {
             return false;
+        }
         
-        if($age<1 or $age>120)
-            
+        if($age < 1 or $age > 120) {
             return false;
-        
-        else
-            
+        } else {
             return true;
-        
+        }   
     }
     
     // Validate URL 
     
     public function xIsUrl($url)
     {
-       
         return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
     }
     
@@ -122,21 +94,22 @@ class XyneoValidate
     
     public function xIsFullname($fullname)
     {
-        
         $result = explode(' ',$fullname);
         
-        if (sizeof($result) < 2)
+        if (sizeof($result) < 2) {
             return false;
+        }
         
-        
-        foreach ($result as $segment)
-        {
+        foreach ($result as $segment) {
             $segment = trim($segment);
-            if(!preg_match("/^(?:\p{L}|[_\-'.])+$/u", $segment))
-                    return false;
-            if(mb_strlen($segment,LAYOUT_CHARSET) < 2)
-                    return false;
             
+            if (!preg_match("/^(?:\p{L}|[_\-'.])+$/u", $segment)) {
+                return false;
+            }
+                    
+            if (mb_strlen($segment, LAYOUT_CHARSET) < 2) {
+                return false;
+            }
         }
         
         return true;
@@ -144,19 +117,19 @@ class XyneoValidate
     
     // Validate username fields
     
-    public function xIsUsername($username,$min_length = false)
+    public function xIsUsername($username, $min_length = false)
     {
-        
         $username = trim($username);
         
-        if($min_length){
-            if(mb_strlen($username,LAYOUT_CHARSET)<$min_length)
+        if ($min_length) {
+            if (mb_strlen($username, LAYOUT_CHARSET)<$min_length) {
                 return false;
+            }
         }
         
-        
-        if(!preg_match("/^(?:\p{L}|[\-])+$/u", $username))
-                return false;
+        if (!preg_match("/^(?:\p{L}|[\-])+$/u", $username)) {
+            return false;
+        }
         
         return true;
     }
@@ -165,10 +138,9 @@ class XyneoValidate
     
     public function xIsInt($input_data)
     {
-        
-        if((string)(int)$input_data != $input_data)
-            
-            return false;
+        if ((string)(int)$input_data != $input_data) {
+           return false; 
+        }
         
         return true;
         
@@ -176,96 +148,76 @@ class XyneoValidate
     
     // Validate a natural 
     
-    public function xIsN($input_data,$zero_allowed = true)
+    public function xIsN($input_data, $zero_allowed = true)
     {
-        
         $min = 0;
         
-        if(!$zero_allowed)
-            
+        if (!$zero_allowed) {
             $min = 1;
+        }
         
-        
-        if((string)(int)$input_data != $input_data or $input_data < $min)
-            
+        if ((string)(int)$input_data != $input_data or $input_data < $min) {
             return false;
+        }
         
-        return true;
-        
+        return true; 
     }
     
     // Validate a number in a range 
     
-    public function xIsInRange($input_data,$min,$max)
+    public function xIsInRange($input_data, $min, $max)
     {
-        
-        if(!is_numeric($input_data))
-            
+        if (!is_numeric($input_data)) {
             return false;
+        }
         
-        if($input_data < $min or $input_data > $max)
-            
+        if ($input_data < $min or $input_data > $max) {
             return false;
+        }
         
-        return true;
-        
+        return true;    
     }
     
     // Validate string exact length 
     
-    public function xIsLong($input_data,$length)
+    public function xIsLong($input_data, $length)
     {
-        
-        if(mb_strlen($input_data,LAYOUT_CHARSET) != $length)
-        
-                return false;
-        
+        if (mb_strlen($input_data, LAYOUT_CHARSET) != $length) {
+            return false;
+        }
         return true;
-        
-        
     }
-    
     
     // Validate string min length 
     
     public function xIsLonger($input_data,$length)
     {
-        
-        if(mb_strlen($input_data,LAYOUT_CHARSET) <= $length)
-        
-                return false;
-        
+        if (mb_strlen($input_data, LAYOUT_CHARSET) <= $length) {
+            return false;
+        }
         return true;
-                
     }
     
     // Validate string max length 
     
     public function xIsShorter($input_data,$length)
     {
+        if (mb_strlen($input_data, LAYOUT_CHARSET) >= $length) {
+            return false;
+        }
         
-        if(mb_strlen($input_data,LAYOUT_CHARSET) >= $length)
-        
-                return false;
-        
-        return true;
-                
+        return true;          
     }
     
     // Validate string length between two values
     
-    public function xIsBetween($input_data,$min_length,$max_length)
+    public function xIsBetween($input_data, $min_length, $max_length)
     {
+        if (mb_strlen($input_data, LAYOUT_CHARSET) < $min_length or mb_strlen($input_data, LAYOUT_CHARSET) > $max_length ) {
+            return false;
+        }
         
-        
-        if(mb_strlen($input_data,LAYOUT_CHARSET) < $min_length or mb_strlen($input_data,LAYOUT_CHARSET) > $max_length )
-        
-                return false;
-        
-        return true;
-                
+        return true;           
     }
     
-} 
-
-?>
+}

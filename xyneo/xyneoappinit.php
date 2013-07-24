@@ -8,23 +8,19 @@
  *
  */
 
-if (file_exists('xyneo/xyneoconfig.php'))
-    
+if (file_exists('xyneo/xyneoconfig.php')) {
     require_once 'xyneo/xyneoconfig.php';
-
-else
-    
+} else {
     die('The core files might have been damaged. xyneoconfig.php doesnt exist.');
+}  
 
 $xyneoconfig = new XyneoConfig();
-
 $xyneoconfig -> checkConfigFile();
 
-
-if (file_exists('xyneo/xyneoincludes.php'))
-    
+if (file_exists('xyneo/xyneoincludes.php')) {
     require_once 'xyneo/xyneoincludes.php';
-
-else
-    
+} else {
     die('The core files might have been damaged. xyneoincludes.php doesnt exist.');
+}
+    
+    
