@@ -4,6 +4,7 @@
 
 class XyneoController
 {
+    
     public function __construct()
     {
         $model = XyneoApplication::getControllers();
@@ -35,4 +36,31 @@ class XyneoController
        }
          
     }
+    
+// Defining the controller request_method
+    
+    public function http($method,$ajax=false)
+    {
+        $result = 1;
+        
+        $real_method = strtolower($_SERVER['REQUEST_METHOD']);
+        $set_method = strtolower($method);
+        
+        if ($real_method != $set_method) {
+            $result = 0;
+        }
+        
+        if ($ajax == true or $ajax == 'ajax') {
+            if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) or strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+                $result = 0;
+            }
+        }
+        
+        if (!$result) {
+            ob_end_clean();
+            header('Location: /'.ERROR_PAGE);
+            die();
+        }  
+    }
+    
 }
