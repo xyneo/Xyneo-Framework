@@ -11,7 +11,7 @@ define('ERROR_PAGE'     , 'error');
 define('SHUTDOWN_PAGE'  , 'shutdown');
 
 // Layouts
-define('LAYOUT_DOCTYPE'             , 'XHTML1.0_TRANSITIONAL');
+define('LAYOUT_DOCTYPE'             , 'HTML5');
 /* 
  * HTML4.01_STRICT, HTML4.01_TRANSITIONAL, HTML4.01_FRAMESET
  * XHTML1.0_STRICT, XHTML1.0_TRANSITIONAL, XHTML1.0_FRAMESET

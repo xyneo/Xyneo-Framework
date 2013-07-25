@@ -58,8 +58,8 @@ class XyneoController
         
         if (!$result) {
             ob_end_clean();
-            header('Location: /'.ERROR_PAGE);
-            die();
+            header('HTTP/1.0 403 Forbidden');
+            die('Acces forbidden 403');
         }  
     }
     
