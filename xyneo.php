@@ -90,6 +90,12 @@ if (file_exists('xyneo/xyneoappinit.php')) {
         damaged.');
 }
 
+if (file_exists('myapp/config/routes.php')) {
+    require_once 'myapp/config/routes.php';
+} else {
+    die("Could not load routes file.");
+} 
+
 $xyneo_app = new Bootstrap();
 
 

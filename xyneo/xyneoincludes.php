@@ -23,7 +23,8 @@ $xyneo_cores = array (
     'xyneoapplication',
     'xyneoview',
     'xyneohelper',
-    'xyneobootstrap'   
+    'xyneobootstrap',
+    'xyneoroute'
 );
 
 foreach ($xyneo_cores as $corefile) {

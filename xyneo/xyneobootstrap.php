@@ -47,7 +47,8 @@ class XyneoBootstrap
         
 // Get URL parts
         
-        $url = isset($_GET['url']) ? $_GET['url'] : null;     
+        $url_base = isset($_GET['url']) ? $_GET['url'] : null;
+        $url = XyneoRoute::parseRoute($url_base);
         $urlexp = explode('/',trim($url,'/'));
         $num = sizeof($urlexp);
         
