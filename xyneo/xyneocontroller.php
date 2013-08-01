@@ -14,7 +14,7 @@ class XyneoController
    
 // This method allows developers to load any model.
     
-    public function loadModel($name, $property = false)
+    public function xLoadModel($name, $property = false)
     {
         if (!$property) {
             $property = 'model';
@@ -39,7 +39,7 @@ class XyneoController
     
 // Defining the controller request_method
     
-    public function http($method,$ajax=false)
+    public function xHttp($method,$ajax=false)
     {
         $result = 1;
         
