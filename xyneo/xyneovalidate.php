@@ -220,4 +220,35 @@ class XyneoValidate
         return true;           
     }
     
+    // Check the post variables given in the post_vars array
+    
+    public function xCheckPostVars($post_vars = false)
+    {
+        if ($post_vars === false) {
+            die('No array givento to xCheckPostVars to compare the post variables with.');
+        }
+        foreach ($post_vars as $index) {
+            if (!isset($_POST[$index])) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    // Check the get variables given in the get_vars array
+    
+    public function xCheckGetVars($get_vars = false)
+    {
+        if ($get_vars === false) {
+            die('No array givento to xCheckGetVars to compare the get variables with.');
+        }
+        foreach ($get_vars as $index) {
+            if (!isset($_GET[$index])) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }
