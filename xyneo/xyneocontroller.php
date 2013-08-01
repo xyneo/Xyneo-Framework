@@ -8,7 +8,7 @@ class XyneoController
     public function __construct()
     {
         $model = XyneoApplication::getControllers();
-        $this->loadModel($model['created_controller']);
+        $this->xLoadModel($model['created_controller']);
         $this->view = new XyneoView();
     }
    

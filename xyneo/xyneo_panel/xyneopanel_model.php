@@ -3,12 +3,12 @@
 class XyneoPanel_model extends XyneoModel
 {
     
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
     
-    function saveProjectData()
+    public function saveProjectData()
     {
         if (DEVELOPER_MODE == 'off') {
             die("DEVELOPER MODE IS OFF!");
@@ -42,7 +42,7 @@ class XyneoPanel_model extends XyneoModel
         
     }
     
-    function refreshLayouts()
+    public function refreshLayouts()
     {
         if (DEVELOPER_MODE == 'off') {
             die("DEVELOPER MODE IS OFF!");
@@ -63,7 +63,7 @@ class XyneoPanel_model extends XyneoModel
         echo $result; 
     }
     
-    function createController()
+    public function createController()
     {
         if (DEVELOPER_MODE == 'off') {
             die("DEVELOPER MODE IS OFF!");
@@ -126,12 +126,12 @@ if(AUTO_COMMENT_PHP_FILES == 'on') $controller_template.='
 $controller_template.='
 class '.ucfirst($name).'_Controller extends XyneoController
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function xyneo()
+    public function xyneo()
     {';
         if($view == 1){ $controller_template.='
         $this->view->page_title = "'.$name.'";
@@ -179,7 +179,7 @@ if(AUTO_COMMENT_PHP_FILES == 'on')$model_template.='/*
 $model_template.='
 class '.ucfirst($name).'_Model extends XyneoModel
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -196,7 +196,7 @@ class '.ucfirst($name).'_Model extends XyneoModel
         
     }
     
-    function createLayout()
+    public function createLayout()
     {
         
         if(DEVELOPER_MODE == 'off')
@@ -370,7 +370,7 @@ Description: '.$desc.'
         
     }
     
-    function createHelper()
+    public function createHelper()
     {
     
         if(DEVELOPER_MODE == 'off')
@@ -408,7 +408,7 @@ Description: '.$desc.'
 ';
         $helper_template.='class '.ucfirst($name).'_Helper extends XyneoHelper
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
