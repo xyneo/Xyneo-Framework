@@ -5,7 +5,7 @@
     </div>
     <div class="xfw_footline">
       <div class="xfw_footer">
-        <span>Copyright © 2012<?php print date('Y') == 2012 ? ' - '. date('Y') : ''; ?> Xyneo Interactive</span>
+        <span>Xyneo Framework &nbsp;&copy; 2012 - 2013</span>
       </div>
     </div>
   </body>

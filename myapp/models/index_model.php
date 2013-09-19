@@ -6,7 +6,8 @@
 
 class Index_Model extends XyneoModel
 {
-    function __construct(){
+    function __construct()
+    {
         parent::__construct();
     }
 }

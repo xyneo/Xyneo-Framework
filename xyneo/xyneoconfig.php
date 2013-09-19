@@ -1,17 +1,16 @@
 <?php if ( ! defined('XYNEO') ) die("Direct access denied!");
 
-class XyneoConfig {
-    
-    function __construct() {
- 
+class XyneoConfig
+{  
+    public function __construct()
+    {
         
-     
     }
     
-    function checkConfigFile(){
-        
+    public function checkConfigFile()
+    {       
         $list = array (
-            
+
             'URL',
             'START_PAGE',
             'ERROR_PAGE',
@@ -34,24 +33,20 @@ class XyneoConfig {
             'DB_PASSWORD',
             'APPID',
             'SECRET'
-            
+
         );
         
-        foreach($list as $option)
-        {
-            if( ! defined($option) )
-                
+        foreach ($list as $option) {
+            if (!defined($option) ) {
                 die("Your config file is damaged. ".$option." is not defined.");
-            
-            
+            }           
         }
         
         $available_charsets = mb_list_encodings();
         
-        if( ! in_array(LAYOUT_CHARSET,$available_charsets))
-                
-                die("Invalid value for LAYOUT_CHARSET. Chech your config file");
-
+        if (!in_array(LAYOUT_CHARSET,$available_charsets)) {
+            die("Invalid value for LAYOUT_CHARSET. Chech your config file");
+        }
     }
     
 }

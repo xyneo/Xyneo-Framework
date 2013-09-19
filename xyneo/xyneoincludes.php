@@ -1,36 +1,21 @@
 <?php if ( ! defined('XYNEO') ) die("Direct access denied!");
 
-if (file_exists('xyneo/xyneodatabase.php'))
-{
-    
-    switch(DB_ALLOW)
-    {
-        
+if (file_exists('xyneo/xyneodatabase.php')) {
+    switch (DB_ALLOW) {
         case 'on' :
-            
             require_once 'xyneo/xyneodatabase.php';
-            
-        break;
-    
+            break;
         case 'off':
-        
-        break;
-    
+            break;
         default:
-            
-            die("Bad value for DB_ALLOW.  Please check your config file");
-        
-    }
-    
+            die("Bad value for DB_ALLOW.  Please check your config file");   
+    }  
+} else {
+    die("The core files might have been damaged. xyneoincludes.php doesnt 
+        exist");   
 }
 
-else
-    
-    die("The core files might have been damaged. xyneoincludes.php doesnt 
-        exist");
-
-$xyneo_cores = array (
-    
+$xyneo_cores = array (  
     'xyneocontroller',
     'xyneovalidate',
     'xyneofile',
@@ -38,48 +23,31 @@ $xyneo_cores = array (
     'xyneoapplication',
     'xyneoview',
     'xyneohelper',
-    'xyneobootstrap'
-    
-    
+    'xyneobootstrap',
+    'xyneoroute'
 );
 
-foreach($xyneo_cores as $corefile)
-{
-    
+foreach ($xyneo_cores as $corefile) {
     $file = 'xyneo/'.$corefile.'.php';
-    
-    if ( file_exists($file) )
-        
+    if (file_exists($file)) {
         require_once $file;
-    
-    else
-        
+    } else {
         die('The core files might have been damaged. '.$corefile.'.php doesnt 
         exist');
-    
+    }
 }
 
-$app_includes = array (
-    
+$app_includes = array (   
     'bootstrap',
-    'config/includes'
-    
+    'config/includes'   
 );
 
-foreach($app_includes as $appfile)
-{
-    
+foreach ($app_includes as $appfile) {
     $file = 'myapp/'.$appfile.'.php';
-    
-    if ( file_exists($file) )
-        
+    if ( file_exists($file) ) {
         require_once $file;
-    
-    else
-        
+    } else {
         die('The application files might have been damaged. '.$app.'.php doesnt 
         exist');
-    
+    }  
 }
-
-?>

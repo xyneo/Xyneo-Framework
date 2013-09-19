@@ -20,48 +20,31 @@
  *
  */
 
-
-
-// Set the root directory
-
-//chdir(__DIR__);
-
 // Check the myapp folder
 
-if(!is_dir('myapp'))
-{
-    
-    die('The myapp folder doesnt exist. Check your directory structure.');
-    
+if (!is_dir('myapp')) {
+    die('The myapp folder doesnt exist. Check your directory structure.');  
 }
 
 // Check the xyneo folder
 
-if(!is_dir('xyneo'))
-{
-    
-    die('The xyneo folder doesnt exist. Check your directory structure.');
-    
+if (!is_dir('xyneo')) {  
+    die('The xyneo folder doesnt exist. Check your directory structure.');    
 }
 
 // Check the public folder
 
-if(!is_dir('xyneo'))
-{
-    
-    die('The public folder doesnt exist. Check your directory structure.');
-    
+if (!is_dir('public')) {  
+    die('The public folder doesnt exist. Check your directory structure.');   
 }
 
 // Check and load the config file
 
-if(file_exists('myapp/config/config.php'))
-
+if (file_exists('myapp/config/config.php')) {
     require_once 'myapp/config/config.php';
-
-else
-    
+} else {
     die("Could not load config file.");
+} 
 
 /*
  * Set error reporting.
@@ -74,30 +57,22 @@ else
 
 // Check DEVELOPER_MODE value
 
-if (defined('DEVELOPER_MODE'))
-{
-	switch (DEVELOPER_MODE)
-	{
-		case 'on':
-			error_reporting(E_ALL);
-		break;
-	
-		case 'off':
-			error_reporting(0);
-		break;
-
-		default:
-			die('Bad value for DEVELOPER_MODE. Please check your 
-                            config file!');
-	}
-}
-
-else 
-{
-    
+if (defined('DEVELOPER_MODE')) {
+    switch (DEVELOPER_MODE) {
+        case 'on':
+                error_reporting(E_ALL);
+                break;
+        case 'off':
+                error_reporting(0);
+                break;
+        default:
+                die('Bad value for DEVELOPER_MODE. Please check your 
+                    config file!');
+                break;
+    }
+} else {    
      die('Your config file might have been damaged. Couldnt find const: 
-         DEVELOPER_MODE');
-    
+         DEVELOPER_MODE');    
 }
 
 
@@ -108,16 +83,18 @@ else
  */
 
 
-if(file_exists('xyneo/xyneoappinit.php'))
-        
+if (file_exists('xyneo/xyneoappinit.php')) {
     require_once 'xyneo/xyneoappinit.php';
-
-else
-    
+} else {
     die('The xyneoappinit.php file doesnt exist. The core files might have been 
         damaged.');
+}
 
-
+if (file_exists('myapp/config/routes.php')) {
+    require_once 'myapp/config/routes.php';
+} else {
+    die("Could not load routes file.");
+} 
 
 $xyneo_app = new Bootstrap();
 

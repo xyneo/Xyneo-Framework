@@ -6,11 +6,13 @@
 
 class Error_Controller extends XyneoController
 {
-    function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
     
-    function xyneo(){
+    public function xyneo()
+    {
         $this->view->page_title = "Error Page";
         $this->view->xRender('error/error','xyneo');
     }
