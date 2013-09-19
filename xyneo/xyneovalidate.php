@@ -225,7 +225,7 @@ class XyneoValidate
     public function xCheckPostVars($post_vars = false)
     {
         if ($post_vars === false) {
-            die('No array givento to xCheckPostVars to compare the post variables with.');
+            die('No array given to xCheckPostVars to compare the post variables with.');
         }
         foreach ($post_vars as $index) {
             if (!isset($_POST[$index])) {
@@ -241,7 +241,7 @@ class XyneoValidate
     public function xCheckGetVars($get_vars = false)
     {
         if ($get_vars === false) {
-            die('No array givento to xCheckGetVars to compare the get variables with.');
+            die('No array given to xCheckGetVars to compare the get variables with.');
         }
         foreach ($get_vars as $index) {
             if (!isset($_GET[$index])) {
