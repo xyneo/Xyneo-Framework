@@ -3,33 +3,24 @@
 
 <!-- Xyneo Panel link -->
 
-<script type ="text/javascript">
-    window.onload = function(){
-        if (!window.jQuery){
-            var jquery = document.createElement('script');
-            jquery.src = '<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/jquery.js';
-            document.head.appendChild(jquery);
-        }
-        setTimeout(function(){
-            var developer = document.createElement('script');
-            developer.src = '<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/developer.js';
-            document.head.appendChild(developer);
-        },1000
-        );
+  <script type="text/javascript">
+    window.onload = function() {
+      if (!window.jQuery) {
+        var jquery = document.createElement('script');
+        jquery.src = '<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/jquery.js';
+        document.head.appendChild(jquery);
+      }
+      setTimeout(function() {
+        var developer = document.createElement('script');
+        developer.src = '<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/js/developer.js';
+        document.head.appendChild(developer);
+      }, 1000);
     }
-</script>
+  </script>
 
-    <form action="#" method="get">
-      <input type="hidden" value="<?php echo XyneoApplication::getRootUrl(); ?>" id="xyneo_jsurl" />
-    </form>
-    <a id="xyneo_panel_logo" href="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel" target="blank" style="position:fixed;top:0px;left:0px;z-index:400;"><img id="the_xyneo_admin_logo"  style="border:none;" src="<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/img/admin_logo.png" title="Open Xyneo Panel" alt="admin logo" /></a>
-    <div id="xyneo_panel_open_info" style="position:fixed;top:0px;left:10px;height:29px;z-index:390;display:none;width:140px;">
-        <div id="xyneo_panel_link" style="background:#87abd7;float:left;width:0px;height:27px;border-top:solid 2px #d0e1f5;border-bottom:solid 2px #d0e1f5;">
-            <a href="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel" target="blank" style="display:none;float:left;margin-left:35px;margin-top:4px;text-decoration:none;color:white;font-size:14px;font-family:'Trebuchet MS';">Xyneo Panel</a>
-        </div>
-
-        <div style="height:27px;width:16px;background:#87abd7;float:left;-moz-border-radius: 0px 14px 14px 0px;-webkit-border-radius: 0px 14px 14px 0px;-khtml-border-radius: 0px 14px 14px 0px;border-radius: 0px 14px 14px 0px;border-right:solid 2px #d0e1f5;border-top:solid 2px #d0e1f5;border-bottom:solid 2px #d0e1f5;">
-        </div>
-    </div>
+	<form action="#" method="get">
+	  <input type="hidden" value="<?php echo XyneoApplication::getRootUrl(); ?>" id="xyneo_jsurl" />
+	</form>
+	<a id="xyneo_panel_logo" href="<?php echo XyneoApplication::getRootUrl(); ?>xyneopanel" target="blank" style="position:fixed;top:0px;left:0px;z-index:400;"><img id="the_xyneo_admin_logo" style="border:none;" src="<?php echo XyneoApplication::getRootUrl(); ?>xyneo/xyneo_panel/public/img/admin_logo.png" title="Open Xyneo Panel" alt="admin logo" /></a>
 
 <!-- Xyneo Panel link end  -->
