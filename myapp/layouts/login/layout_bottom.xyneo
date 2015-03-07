@@ -5,10 +5,10 @@
       <form method="post" action="<?php $this->xUrl(); ?>a_login/auth">
         <div class="xfw_login_content">
           Email<br /><input type="text" name="email" /><br />
-          Jelszó<br /><input type="password" name="password" />
+          Password<br /><input type="password" name="password" />
         </div>
         <div class="xfw_window_footer" >
-          <input type="submit" value ="Belépés" />
+          <input type="submit" value ="Login" />
           <img class="xfw_xi_logo" src ="<?php $this->xLImages(); ?>xi.png" alt="Xyneo Interactive" />
         </div>
       </form>

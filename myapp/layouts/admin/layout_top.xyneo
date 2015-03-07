@@ -4,7 +4,7 @@
     <base href="<?php $this->xUrl(); ?>" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" type="image/x-icon" href="<?php $this->xLImages(); ?>favicon.ico" />
-    <title>Adminfelület: <?php print $this->page_title; ?> | a company</title>
+    <title>Admin: <?php print $this->page_title; ?> | a company</title>
     <link rel="stylesheet" type="text/css" href="<?php $this->xLCss() ?>admin_layout.css" />
     <script type="text/javascript" src="<?php $this->xJs(); ?>jquery.js"></script>
     <script type="text/javascript" src="<?php $this->xLJs(); ?>bganim.js"></script>
@@ -16,8 +16,8 @@
         <a href="<?php $this->xUrl(); ?>" class="the_logo" title="a company">
           <img src="<?php $this->xLImages(); ?>logo.png" alt="a company" />
         </a>
-        <a href="#" class="xfw_logout" title="Kilépés">Kilépés</a>
-        <span class="xfw_user">Teszt Adminisztrátor</span>
+        <a href="#" class="xfw_logout" title="Logout">Logout</a>
+        <span class="xfw_user">Test Admin</span>
       </div>
       <div class="xfw_workplace_header">
         <h1 class="xfw_title"><?php print $this->page_title; ?></h1>
@@ -29,18 +29,18 @@
         <ul class="xfw_sidemenu">
 <?php
   $menus = array(
-    '#' => array('Menüpont 1', 'empty'),
-    '#' => array('Menüpont 2', 'empty'),
-    '#' => array('Menüpont 3', 'empty'),
-    '#' => array('Menüpont 4', 'empty'),
-    '#' => array('Menüpont 5', 'empty'),
-    '#' => array('Menüpont 6', 'empty')
+    '#1' => array('Menu 1', 'empty'),
+    '#2' => array('Menu 2', 'empty'),
+    '#3' => array('Menu 3', 'empty'),
+    '#4' => array('Menu 4', 'empty'),
+    '#5' => array('Menu 5', 'empty'),
+    '#6' => array('Menu 6', 'empty')
   );
   /*
     array(
-      controller neve =>  array(
-        UTF-8 szöveg,
-        32x32 png kép fájl neve kiterjesztés nélkül
+      controller's name =>  array(
+        UTF-8 text,
+        32x32 png image file's name without extension
       )
     )
   */

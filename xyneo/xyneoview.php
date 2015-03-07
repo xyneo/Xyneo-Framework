@@ -238,5 +238,24 @@ class XyneoView
                 echo 'Invalid value for unit. It must be empty or "chars" or "words"';
                 break;
         }
-    }   
+    }
+
+    protected function xFullUrl()
+    {
+        $controllers = XyneoApplication::getControllers();
+        $cont = $controllers["created_controller"];
+        $method = $controllers["called_method"];
+        $values = $controllers["passed_values"];
+        echo
+          $this->url .
+          (
+            $this->xIsIndex() ? "" : $cont .
+            (
+              $method == "xyneo" && count($values) == 0 ? "" : "/". $method .
+              (
+                count($values) == 0 ? "" : "/". implode("/", $values)
+              )
+            )
+          );
+    }
 }

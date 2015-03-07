@@ -32,7 +32,7 @@ class XyneoController
        }
        
        if ($property != 'model' and !file_exists($path)) {
-           die('The model, "'.$name.'" you try to load, doesnt exist!');
+           die('The model, "'.$name.'" you try to load, doesn\'t exist!');
        }
          
     }
@@ -59,7 +59,7 @@ class XyneoController
         if (!$result) {
             ob_end_clean();
             header('HTTP/1.0 403 Forbidden');
-            die('Acces forbidden 403');
+            die('Access forbidden 403');
         }  
     }
     
