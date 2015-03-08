@@ -1,0 +1,21 @@
+.xfw_footline {
+  width: 100%;
+  height: 52px;
+  background-color: #222;
+  margin-top: -25px;
+}
+
+.xfw_footer {
+  margin-right: 20px;
+  min-width: 984px;
+  height: 52px;
+}
+
+.xfw_footer span {
+  color: #e3e4e4;
+  display: inline-block;
+  float: right;
+  font-size: 12px;
+  margin-top: 20px;
+  margin-right: 15px;
+}

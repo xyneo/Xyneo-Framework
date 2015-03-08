@@ -1,0 +1,14 @@
+.xfw_workplace {
+  margin-right: 20px;
+  min-width: 984px;
+  background-image: url('/public/images/admin_layout/side_bg.png');
+}
+
+.xfw_content {
+  background-color: #fff;
+  min-width: 658px;
+  margin-left: 246px;
+  color: #4c4c4c;
+  padding: 40px;
+  font-size: 14px;
+}

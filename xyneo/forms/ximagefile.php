@@ -36,7 +36,7 @@ class XImagefile extends XFile
             return true;
         } else {
             if (! $this->error) {
-                $this->error = "image-format-error" . ": " . $this->getMimeType();
+                $this->error = "image-format-error";
             }
             return false;
         }
