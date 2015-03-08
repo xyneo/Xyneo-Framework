@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo $this->page_title; ?></title>
         <link rel="shortcut icon" href="<?php $this->xLImages() ?>favicon.ico" />
-        <link rel="stylesheet" type="text/css" href="<?php $this->xLCss(); ?>xyneo_layout.css" />
+        <link rel="stylesheet" type="text/css" href="<?php $this->xLCss(false); ?>xyneo_layout.css" />
     </head>
     <body>
         <div id="headline">

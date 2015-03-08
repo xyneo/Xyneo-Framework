@@ -134,7 +134,7 @@ class XRadio extends XCheckboxlist
         if (! $this->required || $this->getValue())
             return true;
         else {
-            $this->error = "required-to-check";
+            $this->error = "required-to-select";
             return false;
         }
     }

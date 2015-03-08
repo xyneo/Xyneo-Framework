@@ -1,0 +1,60 @@
+.xfw_sidebar {
+  width: 246px;
+  position: absolute;
+}
+
+.xfw_sidemenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.xfw_sidemenu li {
+  background-image: url('/public/images/admin_layout/menuhover.png');
+  background-position: -333px 0;
+}
+
+.xfw_sidemenu li.main-menu {
+  background: #222 !important;
+}
+
+.xfw_sidemenu li.main-menu a {
+  text-transform: uppercase;
+  cursor: default;
+}
+
+.xfw_sidemenu li:hover {
+  background-color: #2b719c;
+  background-position: 0 0;
+}
+
+.xfw_sidemenu li.active {
+  background-color: #09507a;
+}
+
+.xfw_sidemenu li a {
+  display: block;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  text-shadow: 0.1em 0.1em 0.2em #000;
+}
+
+.xfw_sidemenu li a .fa {
+  float: right;
+}
+
+.xfw_sidemenu li > ul {
+  display: none;
+}
+
+.xfw_sidemenu li.opened > ul {
+  display: block;
+}
+
+.xfw_separator {
+  height: 2px;
+  background-image: url('/public/images/admin_layout/separator.png');
+}
