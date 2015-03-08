@@ -1,4 +1,9 @@
-<?php if ( ! defined('XYNEO') ) die("Direct access denied!");
+<?php
+if (! defined("XYNEO")) {
+    die("Direct access denied!");
+}
+
+date_default_timezone_set("Europe/Budapest");
 
 // Root URL
 
@@ -49,3 +54,43 @@ define('DB_PASSWORD'    , '');
 
 define('APPID'        , '');
 define('SECRET'       , '');
+
+// Other
+define("SITENAME"          , "Xyneo Framework 1.0");
+define("AUTHOR"            , "Xyneo Interactive");
+define("EMAIL"             , "xyneo.studios@gmail.com");
+define("ITEMS_PER_PAGE"    , 12);
+
+define("AUTO"              , serialize(array(
+    "admin" => array(
+        "css" => array(
+            "public/stylesheets/generals.css",
+            "public/stylesheets/reset.css",
+            "public/stylesheets/font_awesome.css",
+            "public/stylesheets/admin_layout/main.css",
+            "public/stylesheets/admin_layout/header.css",
+            "public/stylesheets/admin_layout/sidebar.css",
+            "public/stylesheets/admin_layout/content.css",
+            "public/stylesheets/admin_layout/footer.css"
+        ),
+        "js" => array(
+            "public/javascript/admin_layout/core.js"
+        )
+    ),
+    "login" => array(
+        "css" => array(
+            "public/stylesheets/generals.css",
+            "public/stylesheets/reset.css",
+            "public/stylesheets/font_awesome.css",
+            "public/stylesheets/login_layout/main.css"
+        ),
+        "js" => array(
+            "public/javascript/form.js",
+            "public/javascript/login_layout/core.js"
+        )
+    ),
+    "xyneo" => array(
+        "css" => array(),
+        "js" => array()
+    )
+)));

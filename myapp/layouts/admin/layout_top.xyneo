@@ -1,62 +1,33 @@
+<?php
+    $admin = new Adminmenu_Helper();
+    $tools = new Admintools_Helper($this);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
     <base href="<?php $this->xUrl(); ?>" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" type="image/x-icon" href="<?php $this->xLImages(); ?>favicon.ico" />
-    <title>Admin: <?php print $this->page_title; ?> | a company</title>
-    <link rel="stylesheet" type="text/css" href="<?php $this->xLCss() ?>admin_layout.css" />
-    <script type="text/javascript" src="<?php $this->xJs(); ?>jquery.js"></script>
-    <script type="text/javascript" src="<?php $this->xLJs(); ?>bganim.js"></script>
-    <script type="text/javascript" src="<?php $this->xLJs(); ?>admin_layout.js"></script>      
+    <title>Admin: <?php echo $this->page_title; ?> | <?php echo SITENAME; ?></title>
+    <link rel="stylesheet" type="text/css" href="<?php $this->xLCss() ?>min-css.css" />
+    <script type="text/javascript" src="<?php $this->xJs(false); ?>jquery.js"></script>
+    <script type="text/javascript" src="<?php $this->xLJs(false); ?>core.js"></script>      
   </head>
   <body>
     <div class="xfw_headline">
       <div class="xfw_header">
-        <a href="<?php $this->xUrl(); ?>" class="the_logo" title="a company">
-          <img src="<?php $this->xLImages(); ?>logo.png" alt="a company" />
+        <a href="<?php $this->xUrl(); ?>" target="_blank" class="the_logo" title="<?php echo SITENAME; ?> megtekintése">
+          <img src="<?php $this->xLImages(); ?>logo.png" alt="<?php echo SITENAME; ?>" />
         </a>
-        <a href="#" class="xfw_logout" title="Logout">Logout</a>
-        <span class="xfw_user">Test Admin</span>
+        <a href="<?php echo $admin->lib->createUrl('logout'); ?>" class="xfw_logout" title="Logout"><i class="fa fa-sign-out"></i> Kijelentkezés</a>
+        <a href="#<?php //echo $admin->lib->createUrl('profile-edit'); ?>" class="xfw_user"><i class="fa fa-pencil"></i> <?php echo $_SESSION['adminuser']->getName(); ?></a>
       </div>
       <div class="xfw_workplace_header">
-        <h1 class="xfw_title"><?php print $this->page_title; ?></h1>
+        <h1 class="xfw_title"><?php echo $this->page_title; ?></h1>
         <img class="xfw_logo" src="<?php $this->xLImages(); ?>xi.png" alt="Xyneo Interactive" />
       </div>
     </div>
     <div class="xfw_workplace">
-      <div class="xfw_sidebar">
-        <ul class="xfw_sidemenu">
-<?php
-  $menus = array(
-    '#1' => array('Menu 1', 'empty'),
-    '#2' => array('Menu 2', 'empty'),
-    '#3' => array('Menu 3', 'empty'),
-    '#4' => array('Menu 4', 'empty'),
-    '#5' => array('Menu 5', 'empty'),
-    '#6' => array('Menu 6', 'empty')
-  );
-  /*
-    array(
-      controller's name =>  array(
-        UTF-8 text,
-        32x32 png image file's name without extension
-      )
-    )
-  */
-  $controllers = XyneoApplication::getControllers();
-  foreach ($menus as $key => $value):
-    $highlight = $controllers['created_controller'] == $key ? 'id="highlight"' : '';
-?>
-          <li <?php print $highlight; ?>>
-            <a href="<?php print $this->xUrl() . $key; ?>">
-            <?php print $value[0]; ?>
+<?php $tools->renderSidebar($admin->getMenus()); ?>
 
-              <img src="<?php print $this->xLImages() .'icons/'. $value[1]; ?>.png" alt="<?php print $value[0]; ?>" />
-            </a>
-            <div class="xfw_separator"></div>
-          </li>
-<?php endforeach; ?>
-        </ul>
-      </div>
       <div class="xfw_content">

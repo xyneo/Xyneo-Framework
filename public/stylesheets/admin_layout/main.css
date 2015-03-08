@@ -1,0 +1,84 @@
+* {
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  behavior: url('/public/stylesheets/PIE.htc');
+}
+
+body {
+  font-family: Arial;
+  background-color: #a3a3a3;
+}
+
+a {
+  color: #2d82b8;
+  text-decoration: none;
+}
+
+.success {
+  border: 1px solid #55c64c;
+  color: #267020;
+  background-color: #cfffcb;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 25px;
+}
+
+.error {
+  border: 1px solid #f00;
+  color: #e11458;
+  background: #faa2a2;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 25px;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  height: 100px;
+}
+
+.clr {
+  clear: both;
+}
+
+input[type=button],input[type=submit] {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+th,td {
+  padding: 5px;
+}
+
+tr.headline {
+  background-color: #000;
+  color: #fff;
+  text-decoration: underline;
+}
+
+tr.first {
+  background-color: #eee;
+}
+
+tr.second {
+  background-color: #aaa;
+  color: #000;
+}
+
+tr.second a {
+  color: #0b6096;
+}

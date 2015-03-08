@@ -1,0 +1,42 @@
+      <div class="xfw_sidebar">
+        <ul class="xfw_sidemenu">
+<?php
+    $count = count(array_keys($this->menuTree));
+    foreach ($this->menuTree as $key => $main):
+?>
+            <li class="<?php echo implode(' ', $main['class']); ?>">
+<?php if ($count < count(array_keys($this->menuTree))): ?>
+                <div class="xfw_separator"></div>
+<?php endif; ?>
+                <a href="<?php echo $main['uri']; ?>"><?php echo $main['name']; ?></a>
+                <div class="xfw_separator"></div>
+                <div class="xfw_separator"></div>
+            </li>
+<?php foreach ($main['menus'] as $i => $menu): ?>
+            <li class="<?php echo implode(' ', $menu['class']); ?>">
+                <a href="<?php echo $menu['uri']; ?>">
+                    <span><?php echo $menu['name']; ?></span>
+                    <i class="fa fa-<?php echo $menu['icon'] ?  : 'angle-right'; ?>"></i>
+                </a>
+                <div class="xfw_separator"></div>
+<?php if (count($menu['children'])): ?>
+                <ul class="second-level-menus">
+<?php foreach ($menu['children'] as $j => $child): ?>
+                    <li class="<?php echo implode(' ', $child['class']); ?>">
+                        <a href="<?php echo $child['uri']; ?>">
+                            <span><?php echo $child['name']; ?></span>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                        <div class="xfw_separator"></div>
+                    </li>
+<?php endforeach; ?>
+                </ul>
+<?php endif; ?>
+            </li>
+<?php endforeach; ?>
+<?php
+        $count --;
+    endforeach;
+?>
+        </ul>
+      </div>
