@@ -28,6 +28,12 @@ class XInputtext extends XyneoField
     protected $placeholderText;
 
     /**
+     *
+     * @var boolean
+     */
+    protected $autocomplete = true;
+
+    /**
      * Build field from parameters
      *
      * @see XyneoField::buildFromParameters()
@@ -49,6 +55,9 @@ class XInputtext extends XyneoField
                     break;
                 case "PLACEHOLDER":
                     $this->setPlaceholderText($value);
+                    break;
+                case "AUTOCOMPLETE":
+                    $this->setAutocomplete($value);
                     break;
             }
         }
@@ -102,6 +111,17 @@ class XInputtext extends XyneoField
 
     /**
      *
+     * @param boolean $value            
+     * @return XInputtext
+     */
+    public function setAutocomplete($value)
+    {
+        $this->autocomplete = (boolean) $value;
+        return $this;
+    }
+
+    /**
+     *
      * @return integer
      */
     public function getSize()
@@ -137,6 +157,15 @@ class XInputtext extends XyneoField
     }
 
     /**
+     *
+     * @return boolean
+     */
+    public function getAutocomplete()
+    {
+        return $this->autocomplete;
+    }
+
+    /**
      * Validate this form field
      *
      * @see XyneoField::validate()
@@ -169,7 +198,7 @@ class XInputtext extends XyneoField
         if (isset($this->prefix)) {
             $ret .= $this->prefix . " ";
         }
-        $ret .= "<input type=\"text\" name=\"" . $this->id . "\" id=\"" . $this->id . "\" size=\"" . $this->size . "\"" . ($this->maxLength ? " maxlength=\"" . $this->maxLength . "\"" : "") . ($this->className ? " class=\"" . trim($this->className) . "\"" : "") . ($this->disabled ? " disabled" : "") . ($this->readonly ? " readonly" : "") . ($this->placeholderText ? " placeholder=\"" . $this->placeholderText . "\"" : "") . " value=\"" . htmlspecialchars($this->getValue()) . "\">" . ($this->tooltip ? " <span id=\"tt_" . $this->id . "\" class=\"tooltip\">" . $this->tooltip . "</span>" : "");
+        $ret .= "<input type=\"text\" name=\"" . $this->id . "\" id=\"" . $this->id . "\" size=\"" . $this->size . "\"" . ($this->maxLength ? " maxlength=\"" . $this->maxLength . "\"" : "") . ($this->className ? " class=\"" . trim($this->className) . "\"" : "") . ($this->disabled ? " disabled" : "") . ($this->readonly ? " readonly" : "") . ($this->placeholderText ? " placeholder=\"" . $this->placeholderText . "\"" : "") . (! $this->autocomplete ? " autocomplete=\"off\"" : "") . " value=\"" . htmlspecialchars($this->getValue()) . "\">" . ($this->tooltip ? " <span id=\"tt_" . $this->id . "\" class=\"tooltip\">" . $this->tooltip . "</span>" : "");
         if (isset($this->suffix)) {
             $ret .= " " . $this->suffix;
         }
