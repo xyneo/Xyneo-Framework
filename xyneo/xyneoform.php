@@ -1214,17 +1214,16 @@ class XyneoForm extends XyneoHelper
                     }
                     $rs = $this->db->xGet();
                     
-                    if ($rs->rowCount()) {
+                    if ($rs->fetchColumn(0)) {
                         $field->setError("already-exists-in-the-database");
                     }
                 }
-                if ($field->getMatchTo() && $this->getField($field->getMatchTo()) && $field->getValue() != $this->getField($field->getMatchTo())
-                    ->getValue()) {
+                if ($field->getMatchTo() && $this->getField($field->getMatchTo()) && $field->getValue() != $this->getValue($field->getMatchTo())) {
                     $field->setError("field-contents-are-not-the-same");
                 }
             }
             
-            if (! $this->validateFields()) {
+            if (count($this->getErrors())) {
                 return false;
             }
             
@@ -1255,10 +1254,10 @@ class XyneoForm extends XyneoHelper
                 if (! count($this->backAction)) {
                     $redirect = $_SERVER["REQUEST_URI"];
                 } else {
-                    $redirect = trim(implode("/", $this->getBackAction()), "/");
+                    $redirect = implode("/", $this->getBackAction());
                 }
                 
-                header("Location: " . $redirect);
+                header("Location: /" . trim($redirect, "/"));
                 exit();
             } else {
                 if (is_callable($this->callback)) {
