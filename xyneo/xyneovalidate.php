@@ -24,13 +24,13 @@ class XyneoValidate
             return $this->xGetmxrr($domainTLD, $mxrecords);
         }
     }
-    
+
     /**
      * Check if getmxrr function exists then check the mail online.
-     * 
-     * @param string $hostname
-     * @param array $mxhosts
-     * @param array $weight
+     *
+     * @param string $hostname            
+     * @param array $mxhosts            
+     * @param array $weight            
      * @return boolean
      */
     private function xGetmxrr($hostname, &$mxhosts, &$mxweight = false)
@@ -44,13 +44,14 @@ class XyneoValidate
 
     /**
      * Predefined getmxrr function for windows.
-     * 
-     * @param string $hostname
-     * @param array $mxhosts
-     * @param array $weight
+     *
+     * @param string $hostname            
+     * @param array $mxhosts            
+     * @param array $weight            
      * @return boolean
      */
-    private function xWinGetmxrr($hostname, &$mxhosts, &$mxweight = false) {
+    private function xWinGetmxrr($hostname, &$mxhosts, &$mxweight = false)
+    {
         if (strtoupper(substr(PHP_OS, 0, 3)) != "WIN") {
             return;
         }
@@ -65,9 +66,9 @@ class XyneoValidate
         if (empty($output)) {
             return;
         }
-        $i = -1;
+        $i = - 1;
         foreach ($output as $line) {
-            $i++;
+            $i ++;
             if (preg_match("/^" . $hostname . "\tMX preference = ([0-9]+), mail exchanger = (.+)$/i", $line, $parts)) {
                 $mxweight[$i] = trim($parts[1]);
                 $mxhosts[$i] = trim($parts[2]);
@@ -77,7 +78,7 @@ class XyneoValidate
                 $mxhosts[$i] = trim($parts[1]);
             }
         }
-        return (boolean) $i != -1;
+        return (boolean) $i != - 1;
     }
 
     /**
@@ -419,6 +420,15 @@ class XyneoValidate
                 break;
             case 'date':
                 $match = strtotime($value);
+                break;
+            case 'fullname':
+                $match = $this->xIsFullname($value);
+                break;
+            case 'username':
+                $match = $this->xIsUsername($value);
+                break;
+            case 'age':
+                $match = $this->xIsAge($value);
                 break;
             default:
                 if (mb_substr($type, 0, 1, LAYOUT_CHARSET) != mb_substr($type, - 1, null, LAYOUT_CHARSET)) {

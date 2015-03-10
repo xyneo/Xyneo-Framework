@@ -23,9 +23,17 @@ class XPassword extends XInputtext
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    protected $placeholderText;
+    protected $maxLength = 20;
+
+    /**
+     *
+     * @var array
+     */
+    protected $hashMethods = array(
+        "md5"
+    );
 
     /**
      * Build field from parameters
@@ -46,6 +54,9 @@ class XPassword extends XInputtext
                     break;
                 case "REQUIRSPECIALCHARS":
                     $this->requireSpecialChars(strtoupper($value) == "REQUIRSPECIALCHARS" || strtoupper($value) == "TRUE" ? true : false);
+                    break;
+                case "HASHMETHOD":
+                    
                     break;
             }
         }
@@ -96,6 +107,30 @@ class XPassword extends XInputtext
     }
 
     /**
+     *
+     * @param mixed $value            
+     * @return XPassword
+     */
+    public function setHashMethods($value)
+    {
+        if (! is_array($value)) {
+            $value = array(
+                $value
+            );
+        }
+        $methods = array();
+        foreach ($value as $func) {
+            if (is_callable($func)) {
+                $methods[] = $func;
+            }
+        }
+        if (count($methods)) {
+            $this->hashMethods = $methods;
+        }
+        return $this;
+    }
+
+    /**
      * Validate this form field
      *
      * @see XInputtext::validate()
@@ -104,17 +139,24 @@ class XPassword extends XInputtext
     {
         $isValid = parent::validate();
         
-        if ($this->mustHaveUppercase && ! $this->validate->xStrongPassword($this->getValue(), $this->minLength, $this->maxLength ? $this->maxLength : mb_strlen($this->getValue(), LAYOUT_CHARSET), 1)) {
+        if (($this->required || ! $this->isEmpty()) && $this->mustHaveUppercase && ! $this->validate->xStrongPassword($this->getValue(), $this->minLength, $this->maxLength ? $this->maxLength : mb_strlen($this->getValue(), LAYOUT_CHARSET), 1)) {
             $this->error = "value-does-not-contain-uppercase-letters";
             $isValid = false;
         }
-        if ($this->mustHaveNumbers && ! $this->validate->xStrongPassword($this->getValue(), $this->minLength, $this->maxLength ? $this->maxLength : mb_strlen($this->getValue(), LAYOUT_CHARSET), 2)) {
+        if (($this->required || ! $this->isEmpty()) && $this->mustHaveNumbers && ! $this->validate->xStrongPassword($this->getValue(), $this->minLength, $this->maxLength ? $this->maxLength : mb_strlen($this->getValue(), LAYOUT_CHARSET), 2)) {
             $this->error = "value-does-not-contain-numbers";
             $isValid = false;
         }
-        if ($this->mustHaveSpecialChars && ! $this->validate->xStrongPassword($this->getValue(), $this->minLength, $this->maxLength ? $this->maxLength : mb_strlen($this->getValue(), LAYOUT_CHARSET), 3)) {
+        if (($this->required || ! $this->isEmpty()) && $this->mustHaveSpecialChars && ! $this->validate->xStrongPassword($this->getValue(), $this->minLength, $this->maxLength ? $this->maxLength : mb_strlen($this->getValue(), LAYOUT_CHARSET), 3)) {
             $this->error = "value-does-not-contain-specialchars";
             $isValid = false;
+        }
+        if (! $this->isEmpty()) {
+            foreach ($this->hashMethods as $func) {
+                $this->setValue(call_user_func($func, $this->getValue()));
+            }
+        } else {
+            $this->setField("");
         }
         return $isValid;
     }
@@ -133,7 +175,7 @@ class XPassword extends XInputtext
         if (isset($this->prefix)) {
             $ret .= $this->prefix . " ";
         }
-        $ret .= "<input type=\"password\" name=\"" . $this->id . "\" id=\"" . $this->id . "\"" . ($this->disabled ? " disabled" : "") . ($this->readonly ? " readonly" : "") . ($this->placeholderText ? " placeholder=\"" . $this->placeholderText . "\"" : "") . ($this->className ? " class=\"" . trim($this->className) . "\"" : "") . " size=\"" . $this->size . "\" />" . ($this->tooltip ? " <span id=\"tt_" . $this->id . "\" class=\"tooltip\">" . $this->tooltip . "</span>" : "");
+        $ret .= "<input type=\"password\" name=\"" . $this->id . "\" id=\"" . $this->id . "\"" . ($this->disabled ? " disabled" : "") . ($this->readonly ? " readonly" : "") . ($this->placeholderText ? " placeholder=\"" . $this->placeholderText . "\"" : "") . (! $this->autocomplete ? " autocomplete=\"off\"" : "") . ($this->className ? " class=\"" . trim($this->className) . "\"" : "") . " size=\"" . $this->size . "\" />" . ($this->tooltip ? " <span id=\"tt_" . $this->id . "\" class=\"tooltip\">" . $this->tooltip . "</span>" : "");
         if (isset($this->suffix)) {
             $ret .= " " . $this->suffix;
         }
