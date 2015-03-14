@@ -1039,7 +1039,7 @@ class XyneoForm extends XyneoHelper
         }
         if ($this->hasBackButton() && count($this->getBackAction())) {
             $script = new XScript();
-            $script->setId("backaction")->setValue("window.onload=function(){document.getElementById('" . ($this->getId() ? $this->getId() . "-" : "") . "button-back').onclick=function(){location.href='/" . trim(implode("/", $this->getBackAction()), "/") . "'}}");
+            $script->setId("backaction")->setValue("function b(){location.href='/" . trim(implode("/", $this->getBackAction()), "/") . "'}");
             $this->addField($script);
         }
         
@@ -1111,7 +1111,7 @@ class XyneoForm extends XyneoHelper
             $ret .= "<button type=\"reset\" class=\"cancel\">" . $this->getResetValue() . "</button>";
         }
         if ($this->hasBackButton() && count($this->getBackAction())) {
-            $ret .= "<button type=\"button\" class=\"cancel\" id=\"" . ($this->getId() ? $this->getId() . "-" : "") . "button-back\">" . $this->getBackValue() . "</button>";
+            $ret .= "<button type=\"button\" class=\"cancel\" id=\"" . ($this->getId() ? $this->getId() . "-" : "") . "button-back\" onclick=\"b()\">" . $this->getBackValue() . "</button>";
         }
         $ret .= "<div class=\"clear clr clearfix\"></div>";
         $ret .= "</div>"; // end form-buttons

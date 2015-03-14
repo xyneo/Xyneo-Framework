@@ -21,7 +21,8 @@ body {
 }
 
 .xfw_login_window {
-  position: relative; width : 413px;
+  position: relative;
+  width: 413px;
   margin: 0 auto;
   min-height: 50px;
   background-color: #fff;
@@ -103,4 +104,17 @@ body {
   display: inline-block;
   color: #e11458;
   padding-bottom: 15px;
+}
+
+.xfw_login_suc {
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto 25px;
+  border: 1px solid #55c64c;
+  color: #267020;
+  background-color: #cfffcb;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  padding: 5px
 }
