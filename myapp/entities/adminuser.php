@@ -62,7 +62,7 @@ class Adminuser
      * @param stdClass $userData            
      * @return Adminuser
      */
-    public function __construct(stdClass $userData)
+    public function __construct($userData)
     {
         foreach ($userData as $key => $value) {
             if (property_exists($this, $key)) {
@@ -72,7 +72,7 @@ class Adminuser
                 $this->passwordHash = $value;
             }
         }
-
+        
         return $this;
     }
 
@@ -128,6 +128,16 @@ class Adminuser
     }
 
     /**
+     * Get user's role.
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Check if the user is active.
      *
      * @return boolean
@@ -145,6 +155,23 @@ class Adminuser
     public function isSysAdmin()
     {
         return (boolean) $this->sysadmin;
+    }
+
+    /**
+     * Get user datas
+     *
+     * @return array
+     */
+    public function getDatas()
+    {
+        return array(
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "email" => $this->getEmail(),
+            "role" => $this->getRole(),
+            "active" => (int) $this->isActive(),
+            "sysadmin" => (int) $this->isSysAdmin()
+        );
     }
 }
 

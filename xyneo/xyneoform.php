@@ -741,7 +741,6 @@ class XyneoForm extends XyneoHelper
     /**
      *
      * @param string $id            
-     * @throws XyneoError
      * @return XyneoField
      */
     public function getField($id)
@@ -749,7 +748,7 @@ class XyneoForm extends XyneoHelper
         if (isset($this->elements[$id])) {
             return $this->elements[$id];
         }
-        throw new XyneoError("Form error: field " . $id . " not found");
+        return false;
     }
 
     /**
