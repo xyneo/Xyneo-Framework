@@ -19,6 +19,8 @@ class Admintools_Helper extends XyneoHelper
      */
     private $folder = "!admintools/";
 
+    private $layout;
+
     /**
      *
      * @param XyneoView $view            
@@ -27,6 +29,7 @@ class Admintools_Helper extends XyneoHelper
     {
         parent::__construct();
         $this->view = $view;
+        $this->layout = XyneoApplication::getLayout();
     }
 
     /**
@@ -38,6 +41,7 @@ class Admintools_Helper extends XyneoHelper
     {
         $this->view->module = $module;
         $this->view->xRender($this->folder . "list_visibility");
+        XyneoApplication::setLayout($this->layout);
     }
 
     /**
@@ -49,6 +53,7 @@ class Admintools_Helper extends XyneoHelper
     {
         $this->view->module = $module;
         $this->view->xRender($this->folder . "list_filter");
+        XyneoApplication::setLayout($this->layout);
     }
 
     /**
@@ -60,11 +65,13 @@ class Admintools_Helper extends XyneoHelper
     {
         $this->view->module = $module;
         $this->view->xRender($this->folder . "list");
+        XyneoApplication::setLayout($this->layout);
     }
 
     public function renderSidebar($menuTree)
     {
         $this->view->menuTree = $menuTree;
         $this->view->xRender($this->folder . "sidebar");
+        XyneoApplication::setLayout($this->layout);
     }
 }
