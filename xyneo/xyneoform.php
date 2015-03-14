@@ -1164,6 +1164,12 @@ class XyneoForm extends XyneoHelper
         return $this;
     }
 
+    /**
+     *
+     * @param string $type            
+     * @throws XyneoError
+     * @return boolean integer
+     */
     public function save($type = null)
     {
         if (is_null($type)) {
@@ -1233,7 +1239,7 @@ class XyneoForm extends XyneoHelper
             );
             $rs = $this->db->xSet($type, $options);
             
-            $insertId = ($type == "insert" ? $this->db->lastInsertId($this->table . "." . current(array_keys($keys))) : $rs->queryString);
+            $insertId = ($type == "insert" ? $this->db->lastInsertId($this->table . "." . current(array_keys($keys))) : current(array_values($keys)));
         } else {
             $insertId = "";
         }
@@ -1243,6 +1249,23 @@ class XyneoForm extends XyneoHelper
                 $field->evaluate($insertId, $type);
             }
         }
+        
+        $this->triggerCallback($insertId, $type);
+        
+        return $insertId;
+    }
+
+    /**
+     *
+     * @param string $insertId            
+     * @param string $type            
+     */
+    public function triggerCallback($insertId = "", $type = null)
+    {
+        if (is_null($type)) {
+            $type = $this->saveMethod;
+        }
+        $type = strtolower($type);
         
         if (is_callable($this->afterSaveCallback)) {
             call_user_func($this->afterSaveCallback, $insertId, $this, $type);
@@ -1264,8 +1287,6 @@ class XyneoForm extends XyneoHelper
                 }
             }
         }
-        
-        return $insertId;
     }
 }
 
