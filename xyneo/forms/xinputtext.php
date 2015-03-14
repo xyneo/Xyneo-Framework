@@ -13,7 +13,7 @@ class XInputtext extends XyneoField
      *
      * @var integer
      */
-    protected $minLength = 1;
+    protected $minLength = 0;
 
     /**
      *

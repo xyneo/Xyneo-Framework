@@ -101,20 +101,8 @@ class XyneoValidate
      * @param integer $strength            
      * @return boolean
      */
-    public function xStrongPassword($password, $minlength, $maxlength, $strength)
+    public function xStrongPassword($password, $minlength = 0, $maxlength = 9999, $strength = 0)
     {
-        if (empty($strength)) {
-            throw new XyneoError('No strength given to password checker.');
-        }
-        
-        if (empty($maxlength)) {
-            throw new XyneoError('No maxlength given to password checker.');
-        }
-        
-        if (empty($minlength)) {
-            throw new XyneoError('No minlength given to password checker.');
-        }
-        
         $password = trim($password);
         $actual_strength = 0;
         

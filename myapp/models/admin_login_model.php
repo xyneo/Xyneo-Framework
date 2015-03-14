@@ -19,11 +19,11 @@ class Admin_login_Model extends XyneoModel
                 /*$result = $this->db->xSelect()
                     ->xFrom("adminusers")
                     ->xWhere("email", $elements["email"]->getValue(), "=")
-                    ->xWhere("password", md5(sha1($elements["password"]->getValue())), "=")
+                    ->xWhere("password", $elements["password"]->getValue(), "=")
                     ->xLimit(1)
                     ->xGet();
                 if ($result->rowCount()) {
-                    return $result->fetch(PDO::FETCH_ASSOC);*/
+                    return $result->fetchObject();*/
                 $adminUser = array(
                     "id" => 1,
                     "name" => "Test Admin",
@@ -33,12 +33,11 @@ class Admin_login_Model extends XyneoModel
                     "active" => true,
                     "sysadmin" => true
                 );
-                if ($elements["email"]->getValue() == $adminUser["email"] && md5(sha1($elements["password"]->getValue())) == $adminUser["password"]) {
+                if ($elements["email"]->getValue() == $adminUser["email"] && $elements["password"]->getValue() == $adminUser["password"]) {
                     return (object) $adminUser;
                 } else {
                     $field = $form->getField("email");
-                    $field->setError("Hibás e-mail cím vagy jelszó.")
-                        ->setClassName($field->getClassName() . " error");
+                    $field->setError("Hibás e-mail cím vagy jelszó.")->setClassName($field->getClassName() . " error");
                     $field = $form->getField("password");
                     $field->setClassName($field->getClassName() . " error");
                 }

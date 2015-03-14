@@ -138,7 +138,11 @@ class XPassword extends XInputtext
     public function validate()
     {
         $isValid = parent::validate();
-        
+
+        if ($this->required && $this->isEmpty()) {
+            $this->error = "required-to-fill";
+            return false;
+        }
         if (($this->required || ! $this->isEmpty()) && $this->mustHaveUppercase && ! $this->validate->xStrongPassword($this->getValue(), $this->minLength, $this->maxLength ? $this->maxLength : mb_strlen($this->getValue(), LAYOUT_CHARSET), 1)) {
             $this->error = "value-does-not-contain-uppercase-letters";
             $isValid = false;
