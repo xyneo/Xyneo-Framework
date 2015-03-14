@@ -26,20 +26,26 @@ class Admin_login_Controller extends XyneoController
             $this->admin->lib->redirect("dashboard");
         }
         $this->view->pageTitle = "Bejelentkezés";
-        $this->form->setAction("")->setId("xfw-login");
+        $this->form->setAction("")
+            ->setId("xfw-login")
+            ->setSubmitValue("Belépés");
+        
         $field = new XInputtext("email");
         $field->addFilter("email")
             ->setLabel("E-mail:")
-            ->setClassName("input")
-            ->setMinLength(0);
+            ->setClassName("input");
         $this->form->addField($field);
+        
         $field = new XPassword("password");
         $field->addFilter("password")
             ->setLabel("Jelszó:")
             ->setClassName("input")
-            ->setMinLength(0);
+            ->setHashMethods(array(
+            "sha1",
+            "md5"
+        ));
         $this->form->addField($field);
-        $this->form->setSubmitValue("Belépés");
+        
         $userData = $this->model->validate($this->form);
         if ($userData) {
             Adminauth_Helper::login($userData);
