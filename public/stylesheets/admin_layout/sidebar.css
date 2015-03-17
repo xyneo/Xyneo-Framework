@@ -51,6 +51,7 @@
   -ms-transition: none;
   transition: none;
   display: none;
+  background-color: rgba(255, 255, 255, .15);
 }
 
 .xfw_sidemenu li.opened>ul,.xfw_sidemenu li.active>ul {

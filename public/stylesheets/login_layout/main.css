@@ -1,8 +1,42 @@
+* {
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  behavior: url('/public/stylesheets/PIE.htc');
+}
+
+::-moz-selection {
+  background-color: #27a7f7;
+  color: #fff;
+}
+
+::selection {
+  background-color: #27a7f7;
+  color: #fff;
+}
+
 body {
   margin: 0;
   padding: 0;
   background-color: #484848;
   font-family: Arial;
+}
+
+input,textarea,button,.selectable {
+  font-family: Arial;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  -o-user-select: text;
+  user-select: text;
 }
 
 .clear {

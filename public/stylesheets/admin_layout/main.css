@@ -16,9 +16,68 @@
 body {
   font-family: Arial;
   background-color: #a3a3a3;
+  overflow: hidden;
 }
 
-input,textarea,.selectable {
+::-moz-focus-inner {
+  border: 0;
+}
+
+::-webkit-input-placeholder {
+  color: rgba(34, 34, 34, 0.6);
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: #222;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: #222;
+}
+
+:-ms-input-placeholder {
+  color: #222;
+}
+
+::-moz-selection {
+  background-color: #27a7f7;
+  color: #fff;
+}
+
+::selection {
+  background-color: #27a7f7;
+  color: #fff;
+}
+
+#wrapper {
+  position: absolute;
+  z-index: 80;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#wrapper+.wrapper-scrollbar {
+  left: auto !important;
+  right: 0 !important;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+
+#wrapper+.wrapper-scrollbar div {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+
+input,textarea,button,.selectable {
   font-family: Arial;
   -webkit-user-select: text;
   -moz-user-select: text;
@@ -27,9 +86,45 @@ input,textarea,.selectable {
   user-select: text;
 }
 
+button,.button {
+  cursor: pointer;
+  border: 1px solid #222;
+  font-weight: bold;
+  background-color: #fff;
+  padding: 0 10px;
+  height: 35px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
 a {
   color: #2d82b8;
   text-decoration: none;
+}
+
+.input,.select {
+  border: 1px solid #000;
+  color: #000;
+  padding: 0 10px;
+  height: 30px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.select {
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  height: 100px;
+}
+
+.clr {
+  clear: both;
 }
 
 .success {
@@ -46,27 +141,12 @@ a {
 .error {
   border: 1px solid #f00;
   color: #e11458;
-  background: #faa2a2;
+  background-color: #faa2a2;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
   padding: 5px;
   margin-bottom: 25px;
-}
-
-textarea {
-  resize: none;
-  width: 100%;
-  height: 100px;
-}
-
-.clr {
-  clear: both;
-}
-
-input[type=button],input[type=submit] {
-  cursor: pointer;
-  font-weight: bold;
 }
 
 th,td {

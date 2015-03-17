@@ -1,0 +1,179 @@
+.form-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 11px;
+}
+
+.form-content {
+  border: 1px solid #222;
+  background-color: #fff;
+  margin-bottom: 16px;
+  background-color: #fff;
+  margin-bottom: 16px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.form-content .form-group {
+  padding-bottom: 10px;
+}
+
+.form-content .form-group .form-group-title {
+  background-color: #222;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 38px;
+  border-bottom: 5px solid #09507a;
+  padding: 0 20px;
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.form-content .form-group .form-group-title:before {
+  font-family: FontAwesome;
+  float: right;
+  font-size: 24px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.form-content .form-group .form-group-title.form-group-close:before {
+  content: '\f106';
+}
+
+.form-content .form-group .form-group-title.form-group-open:before {
+  content: '\f107';
+}
+
+.form-content .form-group .form-group-title .fa {
+  float: right;
+  font-size: 24px;
+  margin-top: 6px;
+}
+
+.form-content .form-group .form-group-title .fa.noclick {
+  text-transform: none;
+  font-size: 12px;
+  line-height: 38px;
+  margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.form-content .form-group .form-group-title .fa.noclick:before {
+  font-family: FontAwesome;
+}
+
+.form-content .form-group .form-group-elements {
+  padding: 15px 20px;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+
+.form-content .form-group .form-group-elements.closed {
+  display: none;
+}
+
+.form-content .form-group .form-group-elements .form-field {
+  margin-bottom: 10px;
+}
+
+.form-content .form-group .form-group-elements .form-field:last-of-type {
+  margin-bottom: 0;
+}
+
+.form-content .form-group .form-group-elements .form-field .field-label {
+  width: 250px;
+  position: relative;
+  font-weight: 400;
+  line-height: 30px;
+  margin-right: 15px;
+  float: left;
+}
+
+.form-content .form-group .form-group-elements .form-field .field-label label {
+  display: block;
+  margin: 0;
+}
+
+.form-content .form-group .form-group-elements .form-field .field-label label.required:before
+  {
+  position: absolute;
+  right: 0;
+  color: #f00;
+  font-size: 8px;
+  font-family: FontAwesome;
+  content: '\f005';
+}
+
+.form-content .form-group .form-group-elements .form-field .field-content {
+  float: left;
+  width: calc(100% - 265px);
+}
+
+.form-content .form-group .form-group-elements .form-field .field-content .form-error
+  {
+  display: block;
+  margin-top: 5px;
+  color: #e11458;
+}
+
+.form-content .form-group .form-group-elements .form-field .field-content .input,.form-content .form-group .form-group-elements .form-field .field-content .select
+  {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.form-content .form-group .form-group-elements .form-field .field-content .input
+  {
+  width: calc(100% - 22px);
+}
+
+.form-content .form-group .form-group-elements .form-field .field-content *:focus
+  {
+  border-color: #09507a;
+  color: #09507a;
+}
+
+.form-content .form-group .form-group-elements .form-field .field-content *.error {
+  margin: 0;
+  background-color: #fff;
+  padding: 0 10px;
+  height: 30px;
+  border-color: #f00;
+  color: #e11458;
+}
+
+.form-content .form-group .form-group-elements .form-field .field-content *.success {
+  margin: 0;
+  background-color: #fff;
+  padding: 0 10px;
+  height: 30px;
+  border-color: #55c64c;
+  color: #267020;
+}
+
+.form-content .form-buttons {
+  padding: 15px 20px;
+}
+
+.form-content .form-buttons button {
+  float: right;
+  margin-left: 10px;
+}
+
+.form-content .form-buttons button:hover {
+  color: #09507a;
+  border-color: #09507a;
+}
+
+.form-content .form-buttons button.cancel {
+  font-weight: normal;
+}
