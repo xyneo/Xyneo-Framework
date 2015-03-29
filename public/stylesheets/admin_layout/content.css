@@ -11,4 +11,9 @@
   color: #4c4c4c;
   padding: 40px;
   font-size: 14px;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
 }

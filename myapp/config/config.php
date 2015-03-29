@@ -61,19 +61,25 @@ define("AUTHOR"            , "Xyneo Interactive");
 define("EMAIL"             , "xyneo.studios@gmail.com");
 define("ITEMS_PER_PAGE"    , 12);
 
-define("AUTO"              , serialize(array(
+define("AUTO", serialize(array(
     "admin" => array(
         "css" => array(
             "public/stylesheets/generals.css",
             "public/stylesheets/reset.css",
             "public/stylesheets/font_awesome.css",
+            "public/stylesheets/nprogress.css",
             "public/stylesheets/admin_layout/main.css",
             "public/stylesheets/admin_layout/header.css",
             "public/stylesheets/admin_layout/sidebar.css",
             "public/stylesheets/admin_layout/content.css",
+            "public/stylesheets/admin_layout/list.css",
+            "public/stylesheets/admin_layout/form.css",
             "public/stylesheets/admin_layout/footer.css"
         ),
         "js" => array(
+            "public/javascript/form.js",
+            "public/javascript/nicescroll.js",
+            "public/javascript/nprogress.js",
             "public/javascript/admin_layout/core.js"
         )
     ),
@@ -82,10 +88,12 @@ define("AUTO"              , serialize(array(
             "public/stylesheets/generals.css",
             "public/stylesheets/reset.css",
             "public/stylesheets/font_awesome.css",
+            "public/stylesheets/nprogress.css",
             "public/stylesheets/login_layout/main.css"
         ),
         "js" => array(
             "public/javascript/form.js",
+            "public/javascript/nprogress.js",
             "public/javascript/login_layout/core.js"
         )
     ),

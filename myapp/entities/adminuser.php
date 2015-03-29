@@ -97,6 +97,18 @@ class Adminuser
     }
 
     /**
+     * Set user's name.
+     *
+     * @param string $name            
+     * @return Adminuser
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
      * Get user's email.
      *
      * @return string
@@ -168,6 +180,7 @@ class Adminuser
             "id" => $this->getId(),
             "name" => $this->getName(),
             "email" => $this->getEmail(),
+            "password" => $this->passwordHash,
             "role" => $this->getRole(),
             "active" => (int) $this->isActive(),
             "sysadmin" => (int) $this->isSysAdmin()
