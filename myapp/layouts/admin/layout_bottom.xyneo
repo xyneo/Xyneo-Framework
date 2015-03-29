@@ -1,4 +1,3 @@
-
         <div class="clr"></div>
       </div>
       <div class="clr"></div>
@@ -8,5 +7,8 @@
         <span>Xyneo Framework &nbsp;&copy; 2012 - <?php echo date('Y'); ?></span>
       </div>
     </div>
+    <script type="text/javascript" src="<?php $this->xJs(false); ?>jquery.js"></script>
+    <script type="text/javascript" src="<?php $this->xJs(false); ?>jquery-ui.js"></script>
+    <script type="text/javascript" src="<?php $this->xLJs(); ?>min-js.js"></script>
   </body>
 </html>

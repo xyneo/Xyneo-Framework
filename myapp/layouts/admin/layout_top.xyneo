@@ -8,10 +8,8 @@
     <base href="<?php $this->xUrl(); ?>" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" type="image/x-icon" href="<?php $this->xLImages(); ?>favicon.ico" />
-    <title>Admin: <?php echo $this->page_title; ?> | <?php echo SITENAME; ?></title>
+    <title>Admin: <?php echo $this->pageTitle; ?> | <?php echo SITENAME; ?></title>
     <link rel="stylesheet" type="text/css" href="<?php $this->xLCss() ?>min-css.css" />
-    <script type="text/javascript" src="<?php $this->xJs(false); ?>jquery.js"></script>
-    <script type="text/javascript" src="<?php $this->xLJs(false); ?>core.js"></script>      
   </head>
   <body>
     <div class="xfw_headline">
@@ -20,10 +18,10 @@
           <img src="<?php $this->xLImages(); ?>logo.png" alt="<?php echo SITENAME; ?>" />
         </a>
         <a href="<?php echo $admin->lib->createUrl('logout'); ?>" class="xfw_logout" title="Logout"><i class="fa fa-sign-out"></i> Kijelentkezés</a>
-        <a href="#<?php //echo $admin->lib->createUrl('profile-edit'); ?>" class="xfw_user"><i class="fa fa-pencil"></i> <?php echo $_SESSION['adminuser']->getName(); ?></a>
+        <a href="<?php echo $admin->lib->createUrl('profile-edit'); ?>" class="xfw_user"><i class="fa fa-pencil"></i> <?php echo $_SESSION['adminuser']->getName(); ?></a>
       </div>
       <div class="xfw_workplace_header">
-        <h1 class="xfw_title"><?php echo $this->page_title; ?></h1>
+        <h1 class="xfw_title"><?php echo $this->pageTitle; ?></h1>
         <img class="xfw_logo" src="<?php $this->xLImages(); ?>xi.png" alt="Xyneo Interactive" />
       </div>
     </div>

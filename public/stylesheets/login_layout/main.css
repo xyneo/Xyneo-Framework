@@ -1,8 +1,42 @@
+* {
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  behavior: url('/public/stylesheets/PIE.htc');
+}
+
+::-moz-selection {
+  background-color: #27a7f7;
+  color: #fff;
+}
+
+::selection {
+  background-color: #27a7f7;
+  color: #fff;
+}
+
 body {
   margin: 0;
   padding: 0;
   background-color: #484848;
   font-family: Arial;
+}
+
+input,textarea,button,.selectable {
+  font-family: Arial;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  -o-user-select: text;
+  user-select: text;
 }
 
 .clear {
@@ -21,7 +55,8 @@ body {
 }
 
 .xfw_login_window {
-  position: relative; width : 413px;
+  position: relative;
+  width: 413px;
   margin: 0 auto;
   min-height: 50px;
   background-color: #fff;
@@ -103,4 +138,17 @@ body {
   display: inline-block;
   color: #e11458;
   padding-bottom: 15px;
+}
+
+.xfw_login_suc {
+  text-align: center;
+  max-width: 450px;
+  margin: 0 auto 25px;
+  border: 1px solid #55c64c;
+  color: #267020;
+  background-color: #cfffcb;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  padding: 5px
 }

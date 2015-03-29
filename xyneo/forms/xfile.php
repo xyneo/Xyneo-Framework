@@ -33,7 +33,7 @@ class XFile extends XInputtext
         
         if (is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
             if ($this->mimeTypes != "*" && ! in_array($this->getMimeType(), explode(",", $this->mimeTypes))) {
-                $this->error = "format-not-allowed";
+                $this->error = "file-format-not-allowed";
                 return false;
             }
         }

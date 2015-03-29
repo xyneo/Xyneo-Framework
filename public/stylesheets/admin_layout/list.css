@@ -1,0 +1,137 @@
+#wrapper #content #list-filter input[type='text'] {
+  width: 277px;
+  margin-right: 21px;
+}
+
+#wrapper #content .pagination {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#wrapper #content .pagination li {
+  display: inline-block;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#wrapper #content .pagination .page a,#wrapper #content .pagination .page span
+  {
+  color: #222;
+  display: block;
+  line-height: inherit !important;
+}
+
+#wrapper #content .pagination .first-page {
+  margin-right: 13px;
+}
+
+#wrapper #content .pagination .prev-page {
+  margin-right: 33px;
+}
+
+#wrapper #content .pagination .next-page {
+  margin-left: 33px;
+}
+
+#wrapper #content .pagination .last-page {
+  margin-left: 13px;
+}
+
+#wrapper #content .pagination .page.active span {
+  background-color: #222;
+  border: 1px solid #e1e0de;
+  color: #fff;
+  width: 20px;
+}
+
+#wrapper #content .jump-to {
+  margin-left: 40px;
+}
+
+#wrapper #content .jump-to label {
+  line-height: 29px;
+}
+
+#wrapper #content .jump-to input[type='text'] {
+  width: 44px;
+}
+
+#wrapper #content .jump-to button {
+  margin-left: 15px;
+}
+
+#wrapper #content .items-per-page {
+  line-height: 34px;
+}
+
+#wrapper #content .items-per-page select {
+  line-height: 29px;
+  height: 29px;
+  width: 50px;
+}
+
+#wrapper #content .items-per-page span,#wrapper #content .items-per-page .fa
+  {
+  line-height: 23px;
+}
+
+#wrapper #content #list {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  border: 1px solid #dbdbdb;
+}
+
+#wrapper #content #list td {
+  vertical-align: middle;
+  height: 40px;
+  padding: 0 10px;
+}
+
+#wrapper #content #list thead td {
+  background-color: #2575c7;
+  color: #fff;
+}
+
+#wrapper #content #list thead td .fa {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+#wrapper #content #list .select {
+  text-align: center;
+  width: 20px;
+}
+
+#wrapper #content #list .actions {
+  text-align: right;
+}
+
+#wrapper #content #list .actions .fa {
+  margin-left: 15px;
+}
+
+#wrapper #content #list tbody tr:nth-child(even) td {
+  background-color: #e1e0de;
+}
+
+#wrapper #content #list tbody tr.inactive td {
+  background-color: #ebb3a8;
+}
+
+#wrapper #content #list tbody tr:hover td {
+  background-color: #c5d4e4;
+}
+
+#wrapper #content #list-group-action {
+  margin-top: 15px;
+}
+
+#wrapper #content #list-group-action a {
+  display: inline-block;
+  text-decoration: underline;
+  margin: 0 2.5px;
+}

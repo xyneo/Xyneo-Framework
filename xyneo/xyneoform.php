@@ -1039,7 +1039,7 @@ class XyneoForm extends XyneoHelper
         }
         if ($this->hasBackButton() && count($this->getBackAction())) {
             $script = new XScript();
-            $script->setId("backaction")->setValue("window.onload=function(){document.getElementById('" . ($this->getId() ? $this->getId() . "-" : "") . "button-back').onclick=function(){location.href='/" . trim(implode("/", $this->getBackAction()), "/") . "'}}");
+            $script->setId("backaction")->setValue("function b(){location.href='/" . trim(implode("/", $this->getBackAction()), "/") . "'}");
             $this->addField($script);
         }
         
@@ -1111,7 +1111,7 @@ class XyneoForm extends XyneoHelper
             $ret .= "<button type=\"reset\" class=\"cancel\">" . $this->getResetValue() . "</button>";
         }
         if ($this->hasBackButton() && count($this->getBackAction())) {
-            $ret .= "<button type=\"button\" class=\"cancel\" id=\"" . ($this->getId() ? $this->getId() . "-" : "") . "button-back\">" . $this->getBackValue() . "</button>";
+            $ret .= "<button type=\"button\" class=\"cancel\" id=\"" . ($this->getId() ? $this->getId() . "-" : "") . "button-back\" onclick=\"b()\">" . $this->getBackValue() . "</button>";
         }
         $ret .= "<div class=\"clear clr clearfix\"></div>";
         $ret .= "</div>"; // end form-buttons
@@ -1164,6 +1164,12 @@ class XyneoForm extends XyneoHelper
         return $this;
     }
 
+    /**
+     *
+     * @param string $type            
+     * @throws XyneoError
+     * @return boolean integer
+     */
     public function save($type = null)
     {
         if (is_null($type)) {
@@ -1233,7 +1239,7 @@ class XyneoForm extends XyneoHelper
             );
             $rs = $this->db->xSet($type, $options);
             
-            $insertId = ($type == "insert" ? $this->db->lastInsertId($this->table . "." . current(array_keys($keys))) : $rs->queryString);
+            $insertId = ($type == "insert" ? $this->db->lastInsertId($this->table . "." . current(array_keys($keys))) : current(array_values($keys)));
         } else {
             $insertId = "";
         }
@@ -1243,6 +1249,23 @@ class XyneoForm extends XyneoHelper
                 $field->evaluate($insertId, $type);
             }
         }
+        
+        $this->triggerCallback($insertId, $type);
+        
+        return $insertId;
+    }
+
+    /**
+     *
+     * @param string $insertId            
+     * @param string $type            
+     */
+    public function triggerCallback($insertId = "", $type = null)
+    {
+        if (is_null($type)) {
+            $type = $this->saveMethod;
+        }
+        $type = strtolower($type);
         
         if (is_callable($this->afterSaveCallback)) {
             call_user_func($this->afterSaveCallback, $insertId, $this, $type);
@@ -1264,8 +1287,6 @@ class XyneoForm extends XyneoHelper
                 }
             }
         }
-        
-        return $insertId;
     }
 }
 
