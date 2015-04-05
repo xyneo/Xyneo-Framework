@@ -38,15 +38,15 @@ class XyneoView
     /**
      * Rendering the page
      *
-     * @param string $name            
-     * @param string $layout            
+     * @param string $name
+     * @param string $layout
      * @return void boolean
      */
     public function xRender($name, $layout = false)
     {
         $cont = XyneoApplication::getControllers();
         $cont = $cont['created_controller'];
-        
+
         if ($cont == "xyneopanel") {
             if (file_exists('xyneo/xyneo_panel/' . $cont . '_view.xyneo')) {
                 require_once 'xyneo/xyneo_panel/' . $cont . '_view.xyneo';
@@ -56,43 +56,43 @@ class XyneoView
             }
             return true;
         }
-        
+
         XyneoApplication::setLayout($layout);
-        
+
         if ($layout) {
             if (file_exists('myapp/layouts/' . $layout . '/layout_top.xyneo')) {
                 require 'myapp/layouts/' . $layout . '/layout_top.xyneo';
             } else {
-                die('A top layout element is missing. Check the 
+                die('A top layout element is missing. Check the
                     layout_top.xyneo in ' . $layout . '.');
             }
-            
+
             if (file_exists('myapp/views/' . $name . '.xyneo')) {
                 require_once 'myapp/views/' . $name . '.xyneo';
             } else {
                 die('The ' . $name . ' view that you are trying to render is
                     missing.');
             }
-            
+
             switch (DEVELOPER_MODE) {
                 case 'on':
                     $filename = XYNEO_DIR . 'xyneo/xyneo_panel/developer.xyneo';
                     if (file_exists($filename)) {
-                        require $filename;
+                        require_once $filename;
                     }
                     break;
                 case 'off':
                     break;
                 default:
-                    die('Bad value for DEVELOPER_MODE. Please check your 
+                    die('Bad value for DEVELOPER_MODE. Please check your
                             config file!');
                     break;
             }
-            
+
             if (file_exists('myapp/layouts/' . $layout . '/layout_bottom.xyneo')) {
                 require 'myapp/layouts/' . $layout . '/layout_bottom.xyneo';
             } else {
-                die('A bottom layout element is missing. Check the 
+                die('A bottom layout element is missing. Check the
                     layout_bottom.xyneo in ' . $layout . '.');
             }
         } else {
@@ -102,18 +102,18 @@ class XyneoView
                 die('The ' . $name . ' view that you are trying to render is
                     missing.');
             }
-            
+
             switch (DEVELOPER_MODE) {
                 case 'on':
                     $filename = XYNEO_DIR . 'xyneo/xyneo_panel/developer.xyneo';
                     if (file_exists($filename)) {
-                        require $filename;
+                        require_once $filename;
                     }
                     break;
                 case 'off':
                     break;
                 default:
-                    die('Bad value for DEVELOPER_MODE. Please check your 
+                    die('Bad value for DEVELOPER_MODE. Please check your
                             config file!');
             }
         }
@@ -123,7 +123,7 @@ class XyneoView
     /**
      * Show error message
      *
-     * @param string $msg_layout            
+     * @param string $msg_layout
      * @return void
      */
     protected function xShowMessage($msg_layout = false)
@@ -131,17 +131,17 @@ class XyneoView
         if (isset($_SESSION['xyneomessage'])) {
             if ($msg_layout) {
                 $layout = explode('[:showMessage:]', $msg_layout);
-                
+
                 if (sizeof($layout) != 2) {
                     die("The xShowMessage method cannot display this layout!");
                 }
-                
+
                 $msg = $layout[0] . $_SESSION['xyneomessage'] . $layout[1];
                 echo $msg;
             } else {
                 echo $_SESSION['xyneomessage'];
             }
-            
+
             unset($_SESSION['xyneomessage']);
         }
         return;
@@ -161,7 +161,7 @@ class XyneoView
     /**
      * Echos the base javascript path to the view
      *
-     * @param boolean $compress            
+     * @param boolean $compress
      * @return void
      */
     protected function xJs($compress = true)
@@ -177,7 +177,7 @@ class XyneoView
     /**
      * Echos the base css path to the view
      *
-     * @param boolean $compress            
+     * @param boolean $compress
      * @return void
      */
     protected function xCss($compress = true)
@@ -193,7 +193,7 @@ class XyneoView
     /**
      * Echos the base images path to the view
      *
-     * @param boolean $output            
+     * @param boolean $output
      * @return void string
      */
     protected function xImages($output = true)
@@ -208,7 +208,7 @@ class XyneoView
     /**
      * Echos the layout javascript path to the view
      *
-     * @param boolean $compress            
+     * @param boolean $compress
      * @return void
      */
     protected function xLJs($compress = true)
@@ -224,7 +224,7 @@ class XyneoView
     /**
      * Echos the layout css path to the view
      *
-     * @param boolean $compress            
+     * @param boolean $compress
      * @return void
      */
     protected function xLCss($compress = true)
@@ -240,7 +240,7 @@ class XyneoView
     /**
      * Echos the layout css path to the view
      *
-     * @param boolean $output            
+     * @param boolean $output
      * @return void string
      */
     protected function xLImages($output = true)
@@ -261,7 +261,7 @@ class XyneoView
     {
         $controllers = XyneoApplication::getControllers();
         $method = $controllers['called_method'];
-        
+
         if (class_exists(START_PAGE . "_controller") and $method == 'xyneo') {
             return true;
         } else {
@@ -278,7 +278,7 @@ class XyneoView
     {
         $controllers = XyneoApplication::getControllers();
         $method = $controllers['called_method'];
-        
+
         if (class_exists(ERROR_PAGE . "_controller") and $method == 'xyneo') {
             return true;
         } else {
@@ -295,7 +295,7 @@ class XyneoView
     {
         $controllers = XyneoApplication::getControllers();
         $method = $controllers['called_method'];
-        
+
         if (class_exists(SHUTDOWN_PAGE . "_controller") and $method == 'xyneo') {
             return true;
         } else {
@@ -306,9 +306,9 @@ class XyneoView
     /**
      * Echos the shorten string
      *
-     * @param string $str            
-     * @param integer $length            
-     * @param string $unit            
+     * @param string $str
+     * @param integer $length
+     * @param string $unit
      * @return void
      */
     protected function xShorten($str, $length, $unit = false)
@@ -316,7 +316,7 @@ class XyneoView
         if (! $unit) {
             $unit = 'chars';
         }
-        
+
         switch ($unit) {
             case 'chars':
                 if (mb_strlen($str, LAYOUT_CHARSET) > $length) {
@@ -325,7 +325,7 @@ class XyneoView
                 }
                 echo $str;
                 break;
-            
+
             case 'words':
                 $words = explode(' ', $str);
                 if (sizeof($words) > $length) {

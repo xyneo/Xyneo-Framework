@@ -41,7 +41,7 @@ class XInputtext extends XyneoField
     public function buildFromParameters($parameters)
     {
         parent::buildFromParameters($parameters);
-        
+
         foreach ($parameters as $key => $value) {
             switch (strtoupper($key)) {
                 case "SIZE":
@@ -61,13 +61,13 @@ class XInputtext extends XyneoField
                     break;
             }
         }
-        
+
         return $this;
     }
 
     /**
      *
-     * @param integer $size            
+     * @param integer $size
      * @return XInputText
      */
     public function setSize($size)
@@ -78,7 +78,7 @@ class XInputtext extends XyneoField
 
     /**
      *
-     * @param integer $value            
+     * @param integer $value
      * @return XInputText
      */
     public function setMinLength($value)
@@ -89,7 +89,7 @@ class XInputtext extends XyneoField
 
     /**
      *
-     * @param integer $value            
+     * @param integer $value
      * @return XInputText
      */
     public function setMaxLength($value)
@@ -100,7 +100,7 @@ class XInputtext extends XyneoField
 
     /**
      *
-     * @param string $value            
+     * @param string $value
      * @return XInputText
      */
     public function setPlaceholderText($value)
@@ -111,7 +111,7 @@ class XInputtext extends XyneoField
 
     /**
      *
-     * @param boolean $value            
+     * @param boolean $value
      * @return XInputtext
      */
     public function setAutocomplete($value)
@@ -173,11 +173,11 @@ class XInputtext extends XyneoField
     public function validate()
     {
         $isValid = true;
-        if ($this->maxLength && ! $this->validate->xIsShorter($this->getValue(), $this->maxLength)) {
+        if ($this->maxLength && $this->validate->xIsLonger($this->getValue(), $this->maxLength)) {
             $this->error = "length-is-too-long";
             $isValid = false;
         }
-        if ($this->required && $this->minLength && ! $this->validate->xIsLonger($this->getValue(), $this->minLength)) {
+        if ($this->required && $this->minLength && $this->validate->xIsShorter($this->getValue(), $this->minLength)) {
             $this->error = "length-is-too-short";
             $isValid = false;
         }

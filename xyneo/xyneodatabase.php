@@ -6,7 +6,7 @@ if (! defined('XYNEO')) {
 /**
  *
  * @author AnarchyChampion
- *        
+ *
  */
 class XyneoDatabase extends PDO
 {
@@ -36,7 +36,7 @@ class XyneoDatabase extends PDO
     /**
      * Built in select columns method
      *
-     * @param array $columns            
+     * @param array $columns
      * @return XyneoDataBase
      */
     public function xSelect($columns = array("*"))
@@ -58,7 +58,7 @@ class XyneoDatabase extends PDO
     /**
      * Built in select table method - xSelect method is required
      *
-     * @param string $table            
+     * @param string $table
      * @return XyneoDataBase
      */
     public function xFrom($table)
@@ -75,10 +75,10 @@ class XyneoDatabase extends PDO
     /**
      * Built in select join method - xFrom method is required
      *
-     * @param string $table            
-     * @param string $link1            
-     * @param string $link2            
-     * @param string $type            
+     * @param string $table
+     * @param string $link1
+     * @param string $link2
+     * @param string $type
      * @return XyneoDataBase
      */
     public function xJoin($table, $link1, $link2, $type = "")
@@ -120,10 +120,10 @@ class XyneoDatabase extends PDO
     /**
      * Built in select condition method - xFrom method is required
      *
-     * @param string $column            
-     * @param mixed $value            
-     * @param string $operator            
-     * @param string $logic            
+     * @param string $column
+     * @param mixed $value
+     * @param string $operator
+     * @param string $logic
      * @return XyneoDataBase
      */
     public function xWhere($column, $value, $operator, $logic = "AND")
@@ -147,6 +147,7 @@ class XyneoDatabase extends PDO
             ">",
             ">=",
             "<=",
+            "REGEXP",
             "LIKE",
             "NOT LIKE",
             "IN",
@@ -184,7 +185,7 @@ class XyneoDatabase extends PDO
     /**
      * Built in group by method
      *
-     * @param string $column            
+     * @param string $column
      * @return XyneoDataBase
      */
     public function xGroup($column)
@@ -201,10 +202,10 @@ class XyneoDatabase extends PDO
     /**
      * Built in having method - xGroup method is required
      *
-     * @param string $column            
-     * @param mixed $value            
-     * @param string $operator            
-     * @param string $logic            
+     * @param string $column
+     * @param mixed $value
+     * @param string $operator
+     * @param string $logic
      * @return XyneoDataBase
      */
     public function xHaving($column, $value, $operator, $logic = "AND")
@@ -265,8 +266,8 @@ class XyneoDatabase extends PDO
     /**
      * Built in order by method - xFrom method is required
      *
-     * @param string $orderby            
-     * @param string $order            
+     * @param string $orderby
+     * @param string $order
      * @return XyneoDataBase
      */
     public function xOrder($orderby, $order = "ASC")
@@ -290,8 +291,8 @@ class XyneoDatabase extends PDO
     /**
      * Built in select limit method - xFrom method is required
      *
-     * @param integer $limit            
-     * @param integer $offset            
+     * @param integer $limit
+     * @param integer $offset
      * @return XyneoDataBase
      */
     public function xLimit($limit, $offset = false)
@@ -316,9 +317,9 @@ class XyneoDatabase extends PDO
     /**
      * Built in select method - if there are no parameters, then xFrom method is required
      *
-     * @param strging $table            
-     * @param array $columns            
-     * @param array $cond            
+     * @param strging $table
+     * @param array $columns
+     * @param array $cond
      * @return PDOStatement
      */
     public function xGet($table = null, $columns = array("*"), $cond = false)
@@ -371,13 +372,13 @@ class XyneoDatabase extends PDO
     /**
      * Built in insert prepare method
      *
-     * @param string $table            
-     * @param array $fields            
-     * @param string $select            
-     * @param string $link1            
-     * @param string $link2            
-     * @param string $column            
-     * @param mixed $value            
+     * @param string $table
+     * @param array $fields
+     * @param string $select
+     * @param string $link1
+     * @param string $link2
+     * @param string $column
+     * @param mixed $value
      * @return XyneoDataBase
      */
     public function xInsert($table, $fields, $select = false, $link1 = false, $link2 = false, $column = false, $value = false)
@@ -439,8 +440,8 @@ class XyneoDatabase extends PDO
     /**
      * Built in update prepare method
      *
-     * @param string $table            
-     * @param array $fields            
+     * @param string $table
+     * @param array $fields
      * @return XyneoDataBase
      */
     public function xUpdate($table, $fields)
@@ -476,7 +477,7 @@ class XyneoDatabase extends PDO
     /**
      * Built in delete prepare method
      *
-     * @param string $table            
+     * @param string $table
      * @return XyneoDatabase
      */
     public function xDelete($table)
@@ -512,8 +513,8 @@ class XyneoDatabase extends PDO
      * )
      * );
      *
-     * @param string $type            
-     * @param array $options            
+     * @param string $type
+     * @param array $options
      * @return PDOStatement
      */
     public function xSet($type = null, $options = false)
@@ -645,9 +646,9 @@ class XyneoDatabase extends PDO
     /**
      * Built in record check
      *
-     * @param mixed $search            
-     * @param string $table            
-     * @param string $column            
+     * @param mixed $search
+     * @param string $table
+     * @param string $column
      * @return boolean
      */
     public function xIsInDb($search, $table, $column)
@@ -667,7 +668,7 @@ class XyneoDatabase extends PDO
     /**
      * Generate alias for PDO bindValue
      *
-     * @param string $column            
+     * @param string $column
      * @return string
      */
     private function xGenerateAlias($column)
@@ -678,7 +679,7 @@ class XyneoDatabase extends PDO
         $clean = preg_replace("/[^a-zA-Z0-9\.\/_|+ -]/", "", $clean);
         $clean = strtolower(trim($clean, $delimiter));
         $clean = preg_replace("/[\.\/_|+ -]+/", $delimiter, $clean);
-        
+
         return trim($clean, $delimiter);
     }
 }
