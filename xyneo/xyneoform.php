@@ -161,7 +161,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $id            
+     * @param string $id
      * @return XyneoForm
      */
     public function setId($id)
@@ -172,7 +172,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $action            
+     * @param string $action
      * @return XyneoForm
      */
     public function setAction($action)
@@ -183,7 +183,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $method            
+     * @param string $method
      * @return XyneoForm
      */
     public function setMethod($method)
@@ -194,7 +194,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $className            
+     * @param string $className
      * @return XyneoForm
      */
     public function addClassName($className)
@@ -205,8 +205,8 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $method            
-     * @param array $action            
+     * @param string $method
+     * @param array $action
      * @return XyneoForm
      */
     public function setBackAction($method, $action = array())
@@ -222,7 +222,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $title            
+     * @param string $title
      * @return XyneoForm
      */
     public function setTitle($title)
@@ -233,7 +233,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $table            
+     * @param string $table
      * @return XyneoForm
      */
     public function setTable($table)
@@ -244,7 +244,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $label            
+     * @param string $label
      * @return XyneoForm
      */
     public function setRequiredLabel($label)
@@ -255,7 +255,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param array $label            
+     * @param array $label
      * @return XyneoForm
      */
     public function setRequiredLabelClass($classes)
@@ -266,7 +266,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $value            
+     * @param string $value
      * @return XyneoForm
      */
     public function setSubmitValue($value)
@@ -277,7 +277,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $value            
+     * @param string $value
      * @return XyneoForm
      */
     public function setResetValue($value)
@@ -288,7 +288,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $value            
+     * @param string $value
      * @return XyneoForm
      */
     public function setBackValue($value)
@@ -299,7 +299,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $callback            
+     * @param string $callback
      * @return XyneoForm
      */
     public function setCallback($callback = null)
@@ -310,7 +310,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $callback            
+     * @param string $callback
      * @return XyneoForm
      */
     public function setAfterSaveCallback($callback = null)
@@ -321,8 +321,8 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $fieldId            
-     * @param mixed $value            
+     * @param string $fieldId
+     * @param mixed $value
      * @return XyneoForm
      */
     public function setValue($fieldId, $value)
@@ -333,7 +333,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param array $values            
+     * @param array $values
      * @return XyneoForm
      */
     public function setValues($values)
@@ -351,8 +351,8 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $fieldId            
-     * @param string $error            
+     * @param string $fieldId
+     * @param string $error
      * @return XyneoForm
      */
     public function setError($fieldId, $error)
@@ -363,7 +363,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param array $groupList            
+     * @param array $groupList
      * @return XyneoForm
      */
     public function setGroups($groupList)
@@ -374,7 +374,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param array $buttonList            
+     * @param array $buttonList
      * @return XyneoForm boolean
      */
     public function setExtraButtons($buttonList)
@@ -389,7 +389,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param boolean $state            
+     * @param boolean $state
      * @return XyneoForm
      */
     public function setMultipart($state = true)
@@ -494,7 +494,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $id            
+     * @param string $id
      * @return boolean
      */
     public function hasField($id)
@@ -504,7 +504,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param XyneoField $field            
+     * @param XyneoField $field
      * @throws XyneoError
      * @return XyneoForm
      */
@@ -519,18 +519,17 @@ class XyneoForm extends XyneoHelper
         }
         if ($field->getType() == "File" || is_subclass_of(get_class($field), "XyneoFile")) {
             $this->isMultipart = true;
-        } else 
-            if ($field->getType() == "Compose") {
-                $this->hasCompose = true;
-            }
+        } else if ($field->getType() == "Compose") {
+            $this->hasCompose = true;
+        }
         $this->elements[$field->getId()] = $field;
         return $this;
     }
 
     /**
      *
-     * @param string $selectedFieldId            
-     * @param XyneoField $newField            
+     * @param string $selectedFieldId
+     * @param XyneoField $newField
      * @return XyneoForm
      */
     public function addFieldBefore($selectedFieldId, XyneoField $newField)
@@ -540,7 +539,7 @@ class XyneoForm extends XyneoHelper
         } /*
            * else { if ($newField->getType() == "Compose") { $this->hasCompose = true; } }
            */
-        
+
         $item = false;
         $num = 0;
         $Field = null;
@@ -552,26 +551,26 @@ class XyneoForm extends XyneoHelper
             }
             $num ++;
         }
-        
+
         if ($item === false) {
             $item = count($this->elements);
         } else {
             $newField->setGroup($Field->getGroup());
         }
-        
+
         $newFieldArr = array(
             $newField->getId() => $newField
         );
-        
+
         $this->elements = array_merge(array_slice($this->elements, 0, $item), $newFieldArr, array_slice($this->elements, $item));
-        
+
         return $this;
     }
 
     /**
      *
-     * @param string $selectedFieldId            
-     * @param XyneoField $newField            
+     * @param string $selectedFieldId
+     * @param XyneoField $newField
      * @return XyneoForm
      */
     public function addFieldAfter($selectedFieldId, XyneoField $newField)
@@ -592,20 +591,20 @@ class XyneoForm extends XyneoHelper
             }
             $num ++;
         }
-        
+
         if ($item === false) {
             $item = count($this->elements);
         } else {
             $item ++;
             $newField->setGroup($Field->getGroup());
         }
-        
+
         $newFieldArr = array(
             $newField->getId() => $newField
         );
-        
+
         $this->elements = array_merge(array_slice($this->elements, 0, $item), $newFieldArr, array_slice($this->elements, $item));
-        
+
         return $this;
     }
 
@@ -628,7 +627,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $value            
+     * @param string $value
      * @return XyneoForm
      */
     public function addExtraButton($value)
@@ -639,8 +638,8 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $groupId            
-     * @param string $groupTitle            
+     * @param string $groupId
+     * @param string $groupTitle
      * @return XyneoForm
      */
     public function addGroup($groupId, $groupTitle)
@@ -663,13 +662,13 @@ class XyneoForm extends XyneoHelper
                 unset($this->elements[$fieldId]);
             }
         }
-        
+
         return $this;
     }
 
     /**
      *
-     * @param string $groupId            
+     * @param string $groupId
      * @return XyneoForm
      */
     public function removeGroup($groupId)
@@ -682,7 +681,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $buttonText            
+     * @param string $buttonText
      * @return XyneoForm
      */
     public function removeExtraButton($buttonText)
@@ -696,7 +695,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param boolean $state            
+     * @param boolean $state
      * @return XyneoForm
      */
     public function disableSubmit($state = true)
@@ -707,7 +706,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param boolean $state            
+     * @param boolean $state
      * @return XyneoForm
      */
     public function disableBack($state = true)
@@ -718,7 +717,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param boolean $state            
+     * @param boolean $state
      * @return XyneoForm
      */
     public function disableReset($state = true)
@@ -729,7 +728,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param boolean $state            
+     * @param boolean $state
      * @return XyneoForm
      */
     public function disableAutoFocus($state = true)
@@ -740,7 +739,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $id            
+     * @param string $id
      * @return XyneoField
      */
     public function getField($id)
@@ -798,7 +797,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $fieldId            
+     * @param string $fieldId
      * @return string
      */
     public function getValue($fieldId)
@@ -817,7 +816,7 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $fieldId            
+     * @param string $fieldId
      * @return string
      */
     public function getError($fieldId)
@@ -996,9 +995,9 @@ class XyneoForm extends XyneoHelper
 
     /**
      *
-     * @param string $methodName            
-     * @param array $args            
-     * @param array $fieldIdList            
+     * @param string $methodName
+     * @param array $args
+     * @param array $fieldIdList
      * @throws XyneoError
      * @return multitype:mixed
      */
@@ -1042,11 +1041,11 @@ class XyneoForm extends XyneoHelper
             $script->setId("backaction")->setValue("function b(){location.href='/" . trim(implode("/", $this->getBackAction()), "/") . "'}");
             $this->addField($script);
         }
-        
+
         $sent = new XHidden();
         $sent->setId("sent")->setValue(1);
         $this->addField($sent);
-        
+
         $ret .= "<form action=\"" . $this->getAction() . "\" method=\"" . $this->getMethod() . "\"" . ($this->getId() ? " id=\"" . $this->getId() . "\"" : "") . ($this->isMultipart() ? " enctype=\"multipart/form-data\"" : "") . (count($this->getClassName()) ? " class=\"" . trim(implode(" ", $this->getClassName())) . "\"" : "") . ">";
         if ($this->getTitle()) {
             $ret .= "<div class=\"form-title\">" . $this->getTitle() . "</div>";
@@ -1123,7 +1122,7 @@ class XyneoForm extends XyneoHelper
     /**
      * Load values from the database by specified condition.
      *
-     * @param array $condition            
+     * @param array $condition
      * @throws XyneoError
      * @return XyneoForm
      */
@@ -1132,18 +1131,18 @@ class XyneoForm extends XyneoHelper
         if (! $this->table || (! is_array($condition) || ! count($condition)) || ! count($this->elements)) {
             throw new XyneoError("Form error: cannot load form values, missing required conditions");
         }
-        
+
         $fields = array();
         foreach ($this->elements as $field) {
             if ($field->getField()) {
                 $fields[$field->getField()] = $field;
             }
         }
-        
+
         if (! count($fields)) {
             throw new XyneoError("Form error: cannot load form values, missing database fields");
         }
-        
+
         $this->db->xSelect(array_keys($fields))
             ->xFrom($this->table)
             ->xLimit(1);
@@ -1151,22 +1150,22 @@ class XyneoForm extends XyneoHelper
             $this->db->xWhere($key, $value, "=");
         }
         $row = $this->db->xGet();
-        
+
         if (! $row->rowCount()) {
             throw new XyneoError("Form error: cannot find record to load data from");
         }
         $rs = $row->fetch(PDO::FETCH_ASSOC);
-        
+
         foreach ($fields as $dbField => $field) {
             $field->setValue($rs[$dbField]);
         }
-        
+
         return $this;
     }
 
     /**
      *
-     * @param string $type            
+     * @param string $type
      * @throws XyneoError
      * @return boolean integer
      */
@@ -1182,7 +1181,7 @@ class XyneoForm extends XyneoHelper
         if ($type != "insert" && $type != "update") {
             throw new XyneoError("Form error: cannot save form, no valid save type set");
         }
-        
+
         if ($this->table) {
             $values = array();
             $keys = array();
@@ -1193,20 +1192,20 @@ class XyneoForm extends XyneoHelper
                     } else {
                         $values[$field->getField()] = $field->getValue();
                     }
-                    if ($type == "update" && $field->isKey()) {
+                    if ($field->isKey()) {
                         $keys[$field->getField()] = $field->getValue();
                     }
                 }
             }
-            
+
             if (! count($values)) {
                 throw new XyneoError("From error: cannot save form, no fields to save");
             }
-            
+
             if ($type == "update" && ! count($keys)) {
                 throw new XyneoError("Form error: cannot save form, keys not present");
             }
-            
+
             foreach ($this->elements as $field) {
                 if ($field->isUnique() && $field->getField()) {
                     $this->db->xSelect(array(
@@ -1218,7 +1217,7 @@ class XyneoForm extends XyneoHelper
                         $this->db->xWhere($key, $value, "<>");
                     }
                     $rs = $this->db->xGet();
-                    
+
                     if ($rs->fetchColumn(0)) {
                         $field->setError("already-exists-in-the-database");
                     }
@@ -1227,38 +1226,47 @@ class XyneoForm extends XyneoHelper
                     $field->setError("field-contents-are-not-the-same");
                 }
             }
-            
+
             if (count($this->getErrors())) {
                 return false;
             }
-            
+
             $options = array(
                 "table" => $this->table,
                 "fields" => $values,
                 "condition" => $keys
             );
             $rs = $this->db->xSet($type, $options);
-            
+
             $insertId = ($type == "insert" ? $this->db->lastInsertId($this->table . "." . current(array_keys($keys))) : current(array_values($keys)));
         } else {
             $insertId = "";
         }
-        
+
+        $evaluated = array();
         foreach ($this->getElements() as $field) {
             if (method_exists($field, "evaluate")) {
-                $field->evaluate($insertId, $type);
+                $field->setValue($field->evaluate($insertId, $type));
+                if ($this->table) {
+                    $evaluated[$field->getField()] = $field->getValue();
+                }
             }
         }
-        
+        if (count($evaluated) && $this->table) {
+            $this->db->xUpdate($this->table, $evaluated)
+                ->xWhere(current(array_keys($keys)), $insertId, "=")
+                ->xSet();
+        }
+
         $this->triggerCallback($insertId, $type);
-        
+
         return $insertId;
     }
 
     /**
      *
-     * @param string $insertId            
-     * @param string $type            
+     * @param string $insertId
+     * @param string $type
      */
     public function triggerCallback($insertId = "", $type = null)
     {
@@ -1266,11 +1274,11 @@ class XyneoForm extends XyneoHelper
             $type = $this->saveMethod;
         }
         $type = strtolower($type);
-        
+
         if (is_callable($this->afterSaveCallback)) {
             call_user_func($this->afterSaveCallback, $insertId, $this, $type);
         }
-        
+
         if ($this->callback) {
             if ($this->callback == "back") {
                 if (! count($this->backAction)) {
@@ -1278,7 +1286,7 @@ class XyneoForm extends XyneoHelper
                 } else {
                     $redirect = implode("/", $this->getBackAction());
                 }
-                
+
                 header("Location: /" . trim($redirect, "/"));
                 exit();
             } else {

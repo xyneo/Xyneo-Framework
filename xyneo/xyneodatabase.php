@@ -175,7 +175,7 @@ class XyneoDatabase extends PDO
                 $cond = " " . $logic . " " . $column . " " . $operator . " :" . $for_alias;
         }
         if (is_array($value)) {
-            $cond = str_ireplace(":" . $for_alias, current($value), $cond);
+            $cond = str_ireplace(":" . $for_alias, implode(", ", $value), $cond);
         }
         $this->where[] = $cond;
         $this->values[] = $value;

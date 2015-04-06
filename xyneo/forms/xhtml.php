@@ -25,7 +25,7 @@ class XHtml extends XyneoField
     public function buildFromParameters($parameters)
     {
         parent::buildFromParameters($parameters);
-        
+
         foreach ($parameters as $key => $value) {
             switch (strtoupper($key)) {
                 case "TEXT":
@@ -36,7 +36,7 @@ class XHtml extends XyneoField
                     break;
             }
         }
-        
+
         return $this;
     }
 
@@ -61,7 +61,7 @@ class XHtml extends XyneoField
 
     /**
      *
-     * @param mixed $text            
+     * @param mixed $text
      * @return XHtml
      */
     public function setText($text)
@@ -72,7 +72,7 @@ class XHtml extends XyneoField
 
     /**
      *
-     * @param string $sql            
+     * @param string $sql
      * @return XHtml
      */
     public function setSqlSource($sql)
@@ -125,7 +125,10 @@ class XHtml extends XyneoField
      */
     public function renderContent()
     {
-        $ret = "<div id=\"" . $this->id . "\">";
+        if ($this->tooltip) {
+            $this->className .= " tooltip";
+        }
+        $ret = "<div id=\"" . $this->id . "\"" . ($this->className ? " class=\"" . trim($this->className) . "\"" : "") . ">";
         if (isset($this->prefix)) {
             $ret .= $this->prefix . " ";
         }
@@ -139,7 +142,7 @@ class XHtml extends XyneoField
         if (isset($this->suffix)) {
             $ret .= " " . $this->suffix;
         }
-        $ret .= "</div>";
+        $ret .= "</div>" . ($this->tooltip ? " <span id=\"tt_" . $this->id . "\" class=\"tooltip\">" . $this->tooltip . "</span>" : "");
         return $ret;
     }
 }

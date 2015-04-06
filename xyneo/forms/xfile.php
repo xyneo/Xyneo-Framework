@@ -16,6 +16,12 @@ class XFile extends XInputtext
     private $mimeTypes = "*";
 
     /**
+     *
+     * @var integer
+     */
+    private $maxFileSize = 2097152;
+
+    /**
      * Validate this form field
      *
      * @see XInputtext::validate()
@@ -25,13 +31,17 @@ class XFile extends XInputtext
         if ($this->error) {
             return false;
         }
-        
-        if ($this->required && ! is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
+
+        if ($this->required && (! isset($_FILES[$this->id]) || ! is_uploaded_file($_FILES[$this->id]["tmp_name"]))) {
             $this->error = "required-to-upload";
             return false;
         }
-        
-        if (is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
+
+        if (isset($_FILES[$this->id]) && is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
+            if ($this->getFileSize() > $this->getMaxFileSize()) {
+                $this->error = "file-size-too-large";
+                return false;
+            }
             if ($this->mimeTypes != "*" && ! in_array($this->getMimeType(), explode(",", $this->mimeTypes))) {
                 $this->error = "file-format-not-allowed";
                 return false;
@@ -48,7 +58,7 @@ class XFile extends XInputtext
     public function buildFromParameters($parameters)
     {
         parent::buildFromParameters($parameters);
-        
+
         foreach ($parameters as $key => $value) {
             switch (strtoupper($key)) {
                 case "DESTINATION":
@@ -57,26 +67,29 @@ class XFile extends XInputtext
                 case "MIMETYPES":
                     $this->setMimeTypes($value);
                     break;
+                case "MAXFILESIZE":
+                    $this->setMaxFileSize((int) $value);
+                    break;
             }
         }
-        
+
         return $this;
     }
 
     /**
      *
-     * @return number
+     * @return boolean
      */
     public function queryValue()
     {
-        if (is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
-            return $this->getDestination();
+        if (isset($_FILES[$this->id]) && is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
+            return true;
         }
     }
 
     /**
      *
-     * @param string $targetPath            
+     * @param string $targetPath
      * @return XFile
      */
     public function setDestination($targetPath)
@@ -87,13 +100,33 @@ class XFile extends XInputtext
 
     /**
      *
-     * @param array $mimeTypes            
+     * @param array $mimeTypes
      * @return XFile
      */
     public function setMimeTypes($mimeTypes)
     {
         $this->mimeTypes = $mimeTypes;
         return $this;
+    }
+
+    /**
+     *
+     * @param integer $size
+     * @return XFile
+     */
+    public function setMaxFileSize($size)
+    {
+        $this->maxFileSize = $size;
+        return $this;
+    }
+
+    /**
+     *
+     * @return integer
+     */
+    public function getMaxFileSize()
+    {
+        return $this->maxFileSize;
     }
 
     /**
@@ -106,6 +139,7 @@ class XFile extends XInputtext
     }
 
     /**
+     *
      * @return string array
      */
     public function getMimeTypes()
@@ -119,7 +153,7 @@ class XFile extends XInputtext
      */
     public function getOriginalName()
     {
-        if (is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
+        if (isset($_FILES[$this->id]) && is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
             return $_FILES[$this->id]["name"];
         } else {
             return false;
@@ -132,7 +166,7 @@ class XFile extends XInputtext
      */
     public function getTempName()
     {
-        if (is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
+        if (isset($_FILES[$this->id]) && is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
             return $_FILES[$this->id]["tmp_name"];
         } else {
             return false;
@@ -158,7 +192,7 @@ class XFile extends XInputtext
      */
     public function getMimeType()
     {
-        if (is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
+        if (isset($_FILES[$this->id]) && is_uploaded_file($_FILES[$this->id]["tmp_name"])) {
             return $_FILES[$this->id]["type"];
         } else {
             return false;
@@ -167,12 +201,25 @@ class XFile extends XInputtext
 
     /**
      *
-     * @param mixed $value            
+     * @param mixed $value
+     * @param string $imageMime
      * @return mixed
      */
-    public function transformDestinationPath($value)
+    public function transformDestinationPath($value, $imageMime = "")
     {
-        $extension = end(explode(".", $this->getOriginalName()));
+        $extension = $this->getOriginalName() ? $this->file->xGetExtension($this->getOriginalName()) : "";
+        if ($imageMime) {
+            if (in_array($imageMime, array(
+                "image/gif",
+                "image/jpeg",
+                "image/png"
+            ))) {
+                $extension = end(explode("/", $imageMime));
+                if ($extension == "jpeg") {
+                    $extension = "jpg";
+                }
+            }
+        }
         return str_replace(array(
             "[id]",
             "[extension]"
@@ -184,14 +231,18 @@ class XFile extends XInputtext
 
     /**
      *
-     * @param mixed $value            
+     * @param mixed $value
+     * @param string $imageMime
      * @return boolean
      */
-    public function evaluate($value)
+    public function evaluate($value, $imageMime = "")
     {
         if ($this->getDestination()) {
-            return move_uploaded_file($this->getTempName(), $this->transformDestinationPath($value));
+            $savePath = $this->transformDestinationPath($value, $imageMime);
+            move_uploaded_file($this->getTempName(), $savePath);
+            return $savePath;
         }
+        return "";
     }
 
     /**
