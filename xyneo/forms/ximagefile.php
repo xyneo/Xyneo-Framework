@@ -22,6 +22,12 @@ class XImagefile extends XFile
     private $image;
 
     /**
+     *
+     * @var string
+     */
+    private $forcedMime = "";
+
+    /**
      * Validate this form field
      *
      * @see XFile::validate()
@@ -49,24 +55,27 @@ class XImagefile extends XFile
     public function buildFromParameters($parameters)
     {
         parent::buildFromParameters($parameters);
-        
+
         foreach ($parameters as $key => $value) {
             switch (strtoupper($key)) {
                 case "MAXWIDTH":
-                    $this->setMaxWidth(intval($value));
+                    $this->setMaxWidth((int) $value);
                     break;
                 case "MAXHEIGHT":
-                    $this->setMaxHeight(intval($value));
+                    $this->setMaxHeight((int) $value);
+                    break;
+                case "FORCEDMIME":
+                    $this->setMaxHeight($value);
                     break;
             }
         }
-        
+
         return $this;
     }
 
     /**
      *
-     * @param integer $maxWidth            
+     * @param integer $maxWidth
      * @return XImageFile
      */
     public function setMaxWidth($maxWidth)
@@ -77,13 +86,33 @@ class XImagefile extends XFile
 
     /**
      *
-     * @param integer $maxHeight            
+     * @param integer $maxHeight
      * @return XImageFile
      */
     public function setMaxHeight($maxHeight)
     {
         $this->maxHeight = $maxHeight;
         return $this;
+    }
+
+    /**
+     *
+     * @param string $mime
+     * @return XImagefile
+     */
+    public function setForcedMime($mime)
+    {
+        $this->forcedMime = $mime;
+        return $this;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getForcedMime()
+    {
+        return $this->forcedMime;
     }
 
     /**
@@ -99,12 +128,13 @@ class XImagefile extends XFile
      *
      * @return integer
      */
-    public function getMaxHeigth()
+    public function getMaxHeight()
     {
         return $this->maxHeight;
     }
 
     /**
+     *
      * @return boolean XyneoImage
      */
     public function getImage()
@@ -123,11 +153,12 @@ class XImagefile extends XFile
     {
         $image = $this->getImage();
         if ($image) {
-            $image->resample($this->getMaxWidth(), $this->getMaxHeigth());
-            $savePath = $this->transformDestinationPath($value);
+            $savePath = $this->transformDestinationPath($value, $this->forcedMime);
+            $image->resize($this->getMaxWidth(), $this->getMaxHeight());
             $image->save($savePath);
+            return $savePath;
         } else {
-            parent::evaluate($value);
+            return parent::evaluate($value, $this->forcedMime);
         }
     }
 }

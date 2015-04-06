@@ -47,7 +47,7 @@ class XyneoImage extends XyneoFile
     /**
      * With the constructor is possible direcly open the given image file.
      *
-     * @param string $filename            
+     * @param string $filename
      * @return XyneoImage
      */
     public function __construct($filename = null)
@@ -61,7 +61,7 @@ class XyneoImage extends XyneoFile
     /**
      * This method opens
      *
-     * @param string $path            
+     * @param string $path
      * @return XyneoImage
      */
     public function open($path)
@@ -72,8 +72,12 @@ class XyneoImage extends XyneoFile
         if ($this->isCodeInjectionAttack($path)) {
             return $this;
         }
-        
-        $this->mime = mime_content_type($path);
+
+        $this->mime = @mime_content_type($path);
+        if (! $this->mime) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $this->mime = finfo_buffer($finfo, file_get_contents($path));
+        }
         switch ($this->mime) {
             case "image/gif":
                 $this->image = imagecreatefromgif($path);
@@ -98,7 +102,7 @@ class XyneoImage extends XyneoFile
     /**
      * This method detects if the image file is fake
      *
-     * @param string $path            
+     * @param string $path
      * @return boolean
      */
     private function isCodeInjectionAttack($path)
@@ -109,7 +113,7 @@ class XyneoImage extends XyneoFile
     /**
      * This method detects if the image has any transparency
      *
-     * @param string $path            
+     * @param string $path
      * @return boolean
      */
     private function detectPngTransparency($path)
@@ -117,16 +121,16 @@ class XyneoImage extends XyneoFile
         if (strlen($path) == 0 || ! file_exists($path)) {
             return false;
         }
-        
+
         if (ord(file_get_contents($path, false, null, 25, 1)) & 4) {
             return true;
         }
-        
+
         $contents = file_get_contents($path);
         if (stripos($contents, "PLTE") !== false && stripos($contents, "tRNS") !== false) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -151,13 +155,23 @@ class XyneoImage extends XyneoFile
     }
 
     /**
-     * This methods returns the image filename
+     * This method returns the image's filename
      *
      * @return string
      */
     public function getFileName()
     {
         return $this->filename;
+    }
+
+    /**
+     * This method returns the image's mime type
+     *
+     * @return string
+     */
+    public function getMime()
+    {
+        return $this->mime;
     }
 
     /**
@@ -179,17 +193,23 @@ class XyneoImage extends XyneoFile
     /**
      * This method resizes the image
      *
-     * @param integer $maxX            
-     * @param integer $maxY            
+     * @param integer $maxX
+     * @param integer $maxY
      * @return XyneoImage
      */
-    public function resize($maxX, $maxY)
+    public function resize($maxX = false, $maxY = false)
     {
         if (! $this->exists()) {
             return $this;
         }
-        
+
         $size = $this->getSize();
+        if (! $maxX) {
+            $maxX = $size["width"];
+        }
+        if (! $maxY) {
+            $maxY = $size["height"];
+        }
         if ($size["width"] <= $maxX && $size["height"] <= $maxY) {
             $this->changed = false;
             return $this;
@@ -227,8 +247,8 @@ class XyneoImage extends XyneoFile
     /**
      * This method cuts out a piece from the center of the image
      *
-     * @param integer $maxX            
-     * @param integer $maxY            
+     * @param integer $maxX
+     * @param integer $maxY
      * @return XyneoImage
      */
     public function crop($maxX, $maxY)
@@ -236,7 +256,7 @@ class XyneoImage extends XyneoFile
         if (! $this->exists()) {
             return $this;
         }
-        
+
         $newImage = imagecreatetruecolor($maxX, $maxY);
         if ($this->isTransparent) {
             imagecolortransparent($newImage, imagecolorallocatealpha($newImage, 0, 0, 0, 127));
@@ -254,8 +274,8 @@ class XyneoImage extends XyneoFile
     /**
      * This method cuts out the biggest square from the center of the image
      *
-     * @param integer $width            
-     * @param integer $height            
+     * @param integer $width
+     * @param integer $height
      * @return XyneoImage
      */
     public function cropMax($width = false, $height = false)
@@ -263,7 +283,7 @@ class XyneoImage extends XyneoFile
         if (! $this->exists()) {
             return $this;
         }
-        
+
         $size = $this->getSize();
         if (! $width && ! $height) {
             extract($size);
@@ -274,27 +294,33 @@ class XyneoImage extends XyneoFile
             }
             return $this;
         }
-        
+        if (! $width) {
+            $width = $size["width"];
+        }
+        if (! $height) {
+            $height = $size["height"];
+        }
+
         $dWidth = $size["width"];
         $dHeight = $size["height"];
-        
+
         $ratioW = $width / $dWidth;
         $ratioH = $height / $dHeight;
         $ratio = $ratioW > $ratioH ? $ratioW : $ratioH;
-        
+
         $newWidth = $ratio * $dWidth;
         $newHeight = $ratio * $dHeight;
-        
+
         $temp = imagecreatetruecolor($newWidth, $newHeight);
         $white = imagecolorallocate($temp, 255, 255, 255);
         imagefill($temp, 0, 0, $white);
         imagecopyresampled($temp, $this->image, 0, 0, 0, 0, $newWidth, $newHeight, $dWidth, $dHeight);
-        
+
         $src = $temp;
         $w = imagesx($src);
         $h = imagesy($src);
         $dest = imagecreatetruecolor($width, $height);
-        
+
         if ($w < $width) {
             $x_coord = floor(($width - $w) / 2);
             $width = $w;
@@ -302,7 +328,7 @@ class XyneoImage extends XyneoFile
             $x_coord = (- 1) * floor(($w - $width) / 2);
             $width = floor(($w - $width) / 2) + $width;
         }
-        
+
         if ($h < $height) {
             $y_coord = floor(($height - $h) / 2);
             $height = $h;
@@ -313,16 +339,47 @@ class XyneoImage extends XyneoFile
         $white = imagecolorallocate($dest, 255, 255, 255);
         imagefill($dest, 0, 0, $white);
         imagecopyresampled($dest, $src, $x_coord, $y_coord, 0, 0, $width, $height, $width, $height);
-        
+
         $this->setImage($dest);
+        return $this;
+    }
+
+    /**
+     * This method cuts out a piece from the image by given coordinates
+     *
+     * @param integer $width
+     * @param integer $height
+     * @param integer $x
+     * @param integer $y
+     * @param integer $bgColor
+     * @return XyneoImage
+     */
+    public function cropWithCoords($width, $height, $x, $y, $bgColor = array(0,0,0))
+    {
+        if (! $this->exists()) {
+            return $this;
+        }
+
+        $size = $this->getSize();
+        $dWidth = $size["width"];
+        $dHeight = $size["height"];
+
+        $dst = imagecreatetruecolor($width, $height);
+
+        $color = imagecolorallocate($dst, $bgColor[0], $bgColor[1], $bgColor[2]);
+        imagefill($dst, 0, 0, $color);
+
+        imagecopyresampled($dst, $this->image, 0, 0, $x, $y, $width, $height, $width, $height);
+
+        $this->setImage($dst);
         return $this;
     }
 
     /**
      * This method puts the image in an arbitrary size rectangle and the image's ratio remains
      *
-     * @param integer $width            
-     * @param integer $height            
+     * @param integer $width
+     * @param integer $height
      * @param array $bgColor
      *            R,G,B
      * @return XyneoImage
@@ -332,18 +389,18 @@ class XyneoImage extends XyneoFile
         if (! $this->exists()) {
             return $this;
         }
-        
+
         $size = $this->getSize();
         $dWidth = $size["width"];
         $dHeight = $size["height"];
-        
+
         if ($dWidth <= $width && $dHeight <= $height) {
             $iWidth = $dWidth;
             $iHeight = $dHeight;
             $x = $width / 2 - $iWidth / 2;
             $y = $height / 2 - $iHeight / 2;
         }
-        
+
         if ($dWidth > $width || $dHeight > $height) {
             if ($width / $dWidth < $height / $dHeight) {
                 $iWidth = $width;
@@ -357,14 +414,14 @@ class XyneoImage extends XyneoFile
                 $y = 0;
             }
         }
-        
+
         $dst = imagecreatetruecolor($width, $height);
-        
-        $color = imagecolorallocate($dst, $bgColor[0], $bgColor[1], $gradparts[2]);
+
+        $color = imagecolorallocate($dst, $bgColor[0], $bgColor[1], $bgColor[2]);
         imagefill($dst, 0, 0, $color);
-        
+
         imagecopyresampled($dst, $this->image, $x, $y, 0, 0, $iWidth, $iHeight, $dWidth, $dHeight);
-        
+
         $this->setImage($dst);
         return $this;
     }
@@ -373,7 +430,7 @@ class XyneoImage extends XyneoFile
      * This method rotates the image.
      * The rotation is in the counterclockwise direction.
      *
-     * @param float $angle            
+     * @param float $angle
      * @return XyneoImage
      */
     public function rotate($angle)
@@ -381,7 +438,7 @@ class XyneoImage extends XyneoFile
         if (! $this->exists()) {
             return $this;
         }
-        
+
         $newImage = imagerotate($this->image, $angle, 0);
         if ($this->isTransparent) {
             imagecolortransparent($newImage, imagecolorallocatealpha($newImage, 0, 0, 0, 127));
@@ -395,7 +452,7 @@ class XyneoImage extends XyneoFile
     /**
      * This method flips the image either horizontally or vertically
      *
-     * @param string $direction            
+     * @param string $direction
      * @return XyneoImage
      */
     public function flip($direction = "horizontal")
@@ -403,49 +460,49 @@ class XyneoImage extends XyneoFile
         if (! $this->exists()) {
             return $this;
         }
-        
+
         if ($direction != "horizontal" && $direction != "vertical") {
             return $this;
         }
-        
+
         extract($this->getSize());
-        
+
         $newImage = imagecreatetruecolor($width, $height);
-        
+
         if ($this->isTransparent) {
             imagecolortransparent($newImage, imagecolorallocate($newImage, 0, 0, 0, 127));
             imagealphablending($newImage, false);
             imagesavealpha($newImage, true);
         }
-        
+
         if ($direction == "horizontal") {
             imagecopyresampled($newImage, $this->image, 0, 0, ($width - 1), 0, $width, $height, 0 - $width, $height);
         } else {
             imagecopyresampled($newImage, $this->image, 0, 0, 0, ($height - 1), $width, $height, $width, 0 - $height);
         }
-        
+
         $this->setImage($newImage);
         return $this;
     }
 
     /**
      *
-     * @param string $mime
-     *            Only image/(gif|jpeg|png) mime types are allowed.
      * @param string $save
      *            Save the image the given destination with or without filename (e.g.: path/to/*) or print out the stdOut.
+     * @param string $mime
+     *            Only image/(gif|jpeg|png) mime types are allowed.
      * @return boolean
      */
-    public function save($mime = "", $save = false)
+    public function save($save = false, $mime = "")
     {
         if (! $this->exists()) {
             return false;
         }
-        
+
         if (empty($mime)) {
             $mime = $this->mime;
         }
-        
+
         if (! in_array($mime, array(
             "image/gif",
             "image/jpeg",
@@ -457,7 +514,7 @@ class XyneoImage extends XyneoFile
         if ($ext == "jpeg") {
             $ext = "jpg";
         }
-        
+
         if ($this->isTransparent) {
             if ($ext == "png") {
                 imagecolortransparent($this->image, imagecolorallocatealpha($this->image, 0, 0, 0, 127));
@@ -473,10 +530,9 @@ class XyneoImage extends XyneoFile
             }
         }
         if (! $save) {
-            if (ob_get_contents() !== false) {
-                ob_end_clean();
+            if (ob_get_contents() === false) {
+                header("Content-type: " . $mime);
             }
-            header("Content-type: " . $mime);
             switch ($ext) {
                 case "gif":
                     imagegif($this->image);
@@ -489,9 +545,12 @@ class XyneoImage extends XyneoFile
                     break;
             }
             imagedestroy($this->image);
+            if (ob_get_contents() !== false) {
+                return ob_get_clean();
+            }
             return true;
         }
-        
+
         $filename = explode("/", $save);
         $tempExt = @end(explode(".", end($filename)));
         if ($tempExt && in_array($tempExt, array(
@@ -503,8 +562,11 @@ class XyneoImage extends XyneoFile
         }
         if (end($filename) == "*") {
             $filename = str_ireplace("*", $this->filename, implode("/", $filename));
+            $filename .= "." . $ext;
         }
-        $filename .= "." . $ext;
+        if (is_array($filename)) {
+            $filename = implode("/", $filename);
+        }
         if (file_exists($filename)) {
             @unlink($filename);
         }
@@ -526,7 +588,7 @@ class XyneoImage extends XyneoFile
     /**
      * Set the new image resourse and set the changed property to true
      *
-     * @param resource $image            
+     * @param resource $image
      * @return XyneoImage
      */
     private function setImage($image)
